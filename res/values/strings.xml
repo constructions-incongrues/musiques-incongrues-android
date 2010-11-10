@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Musiques-Incongrues</string>
+	<string name="app_title">MUSIQUES INCONGRUES</string>
+	<string name="version">version 0.01</string>
+	<string-array name="main_menu">
+		<item>Radio_Ecouter du son incongru</item>
+<!--		<item>Diaporama_Des photos et images folles</item>-->
+<!--		<item>Discussions_Participer au forum</item>-->
+<!--		<item>Télévision_Regarder la TVi sur son téléphone</item>-->
+<!--		<item>Ce soir on sort!_Que se passe t-il ce soir ?</item>-->
+<!--		<item>Agenda_Les choses à faire ou ne pas faire</item>-->
+<!--		<item>Releases_Ecouter les dernières productions</item>-->
+<!--		<item>Contact et liens_Pour aller ailleurs et parler à des gens</item>-->
+	</string-array>
+</resources>

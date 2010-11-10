@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:background="#ffffff">
+
+	<LinearLayout android:id="@+id/actionBar" android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:background="@color/mi_pink" android:padding="5dip">
+		
+		<TextView android:id="@+id/title" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:text="@string/app_title"
+			android:textColor="@color/android:white" android:gravity="center"
+			android:textSize="8pt" android:textStyle="bold" android:textColorHighlight="@color/light_mi_pink"/>
+
+	</LinearLayout>
+
+	<TextView android:id="@+id/version" android:layout_below="@id/actionBar"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:text="@string/version" android:textColor="@color/mi_pink"
+		android:gravity="center" />
+
+	<ListView android:id="@android:id/list" android:layout_below="@id/version"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:drawSelectorOnTop="false" android:listSelector="@color/listview"
+		android:cacheColorHint="#ffffff" android:background="#ffffff"
+		style="@style/MIMenuList" />
+
+
+
+</RelativeLayout>

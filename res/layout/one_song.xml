@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:orientation="horizontal" android:paddingTop="5dip" android:paddingBottom="5dip">
+
+	<ImageView android:id="@+id/songIcon" android:src="@drawable/song"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_gravity="center" android:paddingLeft="5dip"
+		android:paddingRight="5dip" />
+
+	<TextView android:id="@+id/songTitle" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:textColor="#333333"
+		android:textSize="8pt" android:layout_weight="5" android:gravity="center_vertical"/>
+
+<!--	<ImageButton android:layout_width="50px" android:layout_weight="2"-->
+<!--		android:layout_height="50px" android:src="@drawable/play" android:id="@+id/playPauseSong"-->
+<!--		android:layout_gravity="right" android:layout_marginRight="5dip" android:background="@color/android:transparent"/>-->
+
+</LinearLayout>
