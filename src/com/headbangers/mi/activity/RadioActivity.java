@@ -93,8 +93,7 @@ public class RadioActivity extends GuiceListActivity {
             MILinkData data = page.getData().get(position);
 
             TextView songTitle = (TextView) row.findViewById(R.id.songTitle);
-            songTitle.setText(data.getUrl().substring(
-                    data.getUrl().lastIndexOf("/") + 1));
+            songTitle.setText(data.getTitle());
 
             return row;
         }

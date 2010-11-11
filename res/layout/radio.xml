@@ -14,22 +14,27 @@
 			android:layout_gravity="center_vertical" android:textSize="8pt"
 			android:textStyle="bold" android:textColorHighlight="@color/light_mi_pink" />
 
-		<LinearLayout android:id="@+id/actionBar" android:gravity="right"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
+		<LinearLayout android:id="@+id/actionBar"
+			android:gravity="right" android:orientation="horizontal"
+			android:layout_width="fill_parent" android:layout_height="wrap_content">
 			<ImageButton android:id="@+id/barStop"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
-				android:src="@drawable/bar_stop" android:background="@color/android:transparent"/>
+				android:src="@drawable/bar_stop" android:background="@color/android:transparent" />
 
 			<ImageButton android:id="@+id/barRefresh"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
-				android:src="@drawable/bar_refresh" android:background="@color/android:transparent"/>
+				android:src="@drawable/bar_refresh" android:background="@color/android:transparent"
+				android:paddingLeft="5dip" />
 		</LinearLayout>
 	</LinearLayout>
 
 	<TextView android:id="@+id/version" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:text="@string/version"
-		android:textColor="@color/mi_pink" android:gravity="center" />
+		android:textColor="@color/mi_pink" />
+		
+	<TextView android:id="@+id/radioBufferText" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="@string/radio_buffer"
+		android:textColor="@color/mi_pink" />	
 
 	<ListView android:id="@android:id/list" android:layout_below="@id/version"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"

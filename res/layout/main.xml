@@ -16,8 +16,7 @@
 
 	<TextView android:id="@+id/version" android:layout_below="@id/actionBar"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:text="@string/version" android:textColor="@color/mi_pink"
-		android:gravity="center" />
+		android:text="@string/version" android:textColor="@color/mi_pink" />
 
 	<ListView android:id="@android:id/list" android:layout_below="@id/version"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"

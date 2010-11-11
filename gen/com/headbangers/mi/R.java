@@ -9,14 +9,6 @@ package com.headbangers.mi;
 
 public final class R {
     public static final class array {
-        /** 		<item>Diaporama_Des photos et images folles</item>
-		<item>Discussions_Participer au forum</item>
-		<item>Télévision_Regarder la TVi sur son téléphone</item>
-		<item>Ce soir on sort!_Que se passe t-il ce soir ?</item>
-		<item>Agenda_Les choses à faire ou ne pas faire</item>
-		<item>Releases_Ecouter les dernières productions</item>
-		<item>Contact et liens_Pour aller ailleurs et parler à des gens</item>
-         */
         public static final int main_menu=0x7f060000;
     }
     public static final class attr {
@@ -54,6 +46,7 @@ public final class R {
         public static final int menuDisclaimer=0x7f080005;
         public static final int menuIcon=0x7f080003;
         public static final int menuLabel=0x7f080004;
+        public static final int radioBufferText=0x7f08000a;
         public static final int songIcon=0x7f080006;
         public static final int songTitle=0x7f080007;
         public static final int title=0x7f080001;
@@ -68,6 +61,7 @@ public final class R {
     public static final class string {
         public static final int app_name=0x7f050002;
         public static final int app_title=0x7f050003;
+        public static final int radio_buffer=0x7f050005;
         public static final int version=0x7f050004;
         public static final int webservice_host=0x7f050000;
         public static final int webservice_service_links_mp3=0x7f050001;

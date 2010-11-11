@@ -14,6 +14,8 @@ public class MILinkData {
     private String mimeType;
     private String url;
 
+    private String title;
+    
     public MILinkData(Map<String, Object> value) {
         this.contributorName = (String)value.get("contributor_name");
         this.discussionId = (Integer)value.get("discussion_id");
@@ -22,6 +24,8 @@ public class MILinkData {
         this.domainParent = (String)value.get("domain_parent");
         this.mimeType = (String)value.get("mime_type");
         this.url = (String)value.get("url");
+        
+        this.title = this.url.substring(this.url.lastIndexOf("/") + 1).replaceAll("%20", " ");
     }
 
     public Date getContributionDate() {
@@ -54,6 +58,10 @@ public class MILinkData {
 
     public String getUrl() {
         return url;
+    }
+    
+    public String getTitle() {
+        return title;
     }
     
 }
