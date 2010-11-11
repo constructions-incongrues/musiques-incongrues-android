@@ -3,6 +3,7 @@ package com.headbangers.mi.activity;
 import java.io.IOException;
 
 import roboguice.activity.GuiceListActivity;
+import roboguice.inject.InjectResource;
 import roboguice.inject.InjectView;
 import android.app.Activity;
 import android.media.MediaPlayer;
@@ -27,14 +28,18 @@ public class RadioActivity extends GuiceListActivity {
 
     @Inject
     private DataAccessService data;
+    
+    @InjectResource(R.string.radio_buffer)
+    private String defaultTextForBuffer;
 
     private DataPage page;
-    private MediaPlayer mediaPlayer = new MediaPlayer();
+    private MediaPlayer mediaPlayer = null;
     private MediaPlayer.OnPreparedListener mediaPlayerAsyncLauncher = new MediaPlayer.OnPreparedListener() {
 
         @Override
         public void onPrepared(MediaPlayer mp) {
             mp.start();
+            buffer.setText("Yeaaaaaah :D");
             Toast.makeText(RadioActivity.this, "Le morceau démarre !", 1000)
                     .show();
         }               
@@ -42,6 +47,11 @@ public class RadioActivity extends GuiceListActivity {
 
     @InjectView(R.id.barStop)
     private ImageButton barStop;
+    @InjectView(R.id.barRefresh)
+    private ImageButton barRefresh;
+    
+    @InjectView(R.id.radioBufferText)
+    private TextView buffer; // utiliser ce champ comme indicateur des actions
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +68,17 @@ public class RadioActivity extends GuiceListActivity {
 
             @Override
             public void onClick(View v) {
+                buffer.setText(defaultTextForBuffer);
                 stopSong(false); // TODO true pour faire un release des
                                  // ressources
+            }
+        });
+        
+        barRefresh.setOnClickListener(new View.OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                page = data.retrieveLastNLinks(10);
             }
         });
     }
@@ -67,9 +86,7 @@ public class RadioActivity extends GuiceListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         MILinkData data = page.getData().get(position);
-
         playSong(data.getUrl());
-
     }
 
     class RadioAdapter extends ArrayAdapter<MILinkData> {
@@ -103,21 +120,21 @@ public class RadioActivity extends GuiceListActivity {
 
         stopSong(false);
 
+        mediaPlayer = new MediaPlayer();
+        mediaPlayer.setOnPreparedListener(mediaPlayerAsyncLauncher);
+        
         try {
-            mediaPlayer.setDataSource(this, Uri.parse(songUrl));
+            mediaPlayer.setDataSource(songUrl);//  setDataSource(this, Uri.parse(songUrl));
             mediaPlayer.prepareAsync();
-            mediaPlayer.setOnPreparedListener(mediaPlayerAsyncLauncher);
+            
             Toast.makeText(this, "En cours de chargement ...", 1000).show();
+            buffer.setText("En cours de chargement, patientez.");
 
         } catch (IllegalArgumentException e) {
             Toast.makeText(this, "Désolé, je n'ai pas pu lire ce morceau :(",
                     1000).show();
             e.printStackTrace();
         } catch (IllegalStateException e) {
-            Toast.makeText(this, "Désolé, je n'ai pas pu lire ce morceau :(",
-                    1000).show();
-            e.printStackTrace();
-        } catch (SecurityException e) {
             Toast.makeText(this, "Désolé, je n'ai pas pu lire ce morceau :(",
                     1000).show();
             e.printStackTrace();
