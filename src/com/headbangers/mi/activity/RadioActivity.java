@@ -126,27 +126,10 @@ public class RadioActivity extends GuiceListActivity {
 
         stopSong(false);
         mediaPlayer.setOnPreparedListener(mediaPlayerAsyncLauncher);
-
-        try {
-            mediaPlayer.setDataSource(songUrl);
-            mediaPlayer.prepareAsync();
-
-            Toast.makeText(this, "En cours de chargement ...", 1000).show();
-            buffer.setText("En cours de chargement, patientez.");
-
-        } catch (IllegalArgumentException e) {
-            Toast.makeText(this, "Désolé, je n'ai pas pu lire ce morceau :(",
-                    1000).show();
-            e.printStackTrace();
-        } catch (IllegalStateException e) {
-            Toast.makeText(this, "Désolé, je n'ai pas pu lire ce morceau :(",
-                    1000).show();
-            e.printStackTrace();
-        } catch (IOException e) {
-            Toast.makeText(this, "Désolé, je n'ai pas pu lire ce morceau :(",
-                    1000).show();
-            e.printStackTrace();
-        }
+        tryToLoadSongInPlayer (songUrl, true);
+        mediaPlayer.prepareAsync();
+        Toast.makeText(this, "En cours de chargement ...", 1000).show();
+        buffer.setText("En cours de chargement, patientez...");
     }
 
     protected void stopSong(boolean itsOver) {
@@ -161,6 +144,28 @@ public class RadioActivity extends GuiceListActivity {
             }
         } catch (IllegalStateException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void tryToLoadSongInPlayer(String songUrl, boolean reTryIfFail) {
+        try {
+            mediaPlayer.setDataSource(songUrl);
+        } catch (IllegalArgumentException e) {
+            Toast.makeText(
+                    this,
+                    "Désolé, je n'ai pas pu lire ce morceau : problème dans le code",
+                    1000).show();
+        } catch (IllegalStateException e) {
+            if (reTryIfFail) {
+                tryToLoadSongInPlayer(songUrl, false);
+            } else {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            Toast.makeText(
+                    this,
+                    "Désolé, je n'ai pas pu lire ce morceau : la chanson n'existe peut-être plus ...",
+                    1000).show();
         }
     }
 
@@ -179,7 +184,7 @@ public class RadioActivity extends GuiceListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.menuRadioHasard:
-            page = data.retrieveShuffledNLinks(10);            
+            page = data.retrieveShuffledNLinks(10);
             return true;
 
         }
