@@ -7,9 +7,11 @@ import roboguice.inject.InjectResource;
 import roboguice.inject.InjectView;
 import android.app.Activity;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -26,14 +28,15 @@ import com.headbangers.mi.service.DataAccessService;
 
 public class RadioActivity extends GuiceListActivity {
 
+    protected static MediaPlayer mediaPlayer = new MediaPlayer();
+
     @Inject
     private DataAccessService data;
-    
+
     @InjectResource(R.string.radio_buffer)
     private String defaultTextForBuffer;
 
     private DataPage page;
-    private MediaPlayer mediaPlayer = null;
     private MediaPlayer.OnPreparedListener mediaPlayerAsyncLauncher = new MediaPlayer.OnPreparedListener() {
 
         @Override
@@ -42,17 +45,17 @@ public class RadioActivity extends GuiceListActivity {
             buffer.setText("Yeaaaaaah :D");
             Toast.makeText(RadioActivity.this, "Le morceau démarre !", 1000)
                     .show();
-        }               
+        }
     };
 
     @InjectView(R.id.barStop)
     private ImageButton barStop;
     @InjectView(R.id.barRefresh)
     private ImageButton barRefresh;
-    
+
     @InjectView(R.id.radioBufferText)
     private TextView buffer; // utiliser ce champ comme indicateur des actions
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,9 +76,9 @@ public class RadioActivity extends GuiceListActivity {
                                  // ressources
             }
         });
-        
+
         barRefresh.setOnClickListener(new View.OnClickListener() {
-            
+
             @Override
             public void onClick(View v) {
                 page = data.retrieveLastNLinks(10);
@@ -111,6 +114,9 @@ public class RadioActivity extends GuiceListActivity {
 
             TextView songTitle = (TextView) row.findViewById(R.id.songTitle);
             songTitle.setText(data.getTitle());
+            TextView songContributor = (TextView) row
+                    .findViewById(R.id.songContributor);
+            songContributor.setText(data.getContributorName());
 
             return row;
         }
@@ -119,14 +125,12 @@ public class RadioActivity extends GuiceListActivity {
     protected void playSong(String songUrl) {
 
         stopSong(false);
-
-        mediaPlayer = new MediaPlayer();
         mediaPlayer.setOnPreparedListener(mediaPlayerAsyncLauncher);
-        
+
         try {
-            mediaPlayer.setDataSource(songUrl);//  setDataSource(this, Uri.parse(songUrl));
+            mediaPlayer.setDataSource(songUrl);
             mediaPlayer.prepareAsync();
-            
+
             Toast.makeText(this, "En cours de chargement ...", 1000).show();
             buffer.setText("En cours de chargement, patientez.");
 
@@ -146,14 +150,40 @@ public class RadioActivity extends GuiceListActivity {
     }
 
     protected void stopSong(boolean itsOver) {
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-            mediaPlayer.reset();
-        }
+        try {
+            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+                mediaPlayer.reset();
+            }
 
-        if (itsOver) {
-            mediaPlayer.release();
+            if (itsOver) {
+                mediaPlayer.release();
+            }
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
         }
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Création d'un MenuInflater qui va permettre d'instancier un Menu XML
+        // en un objet Menu
+        MenuInflater inflater = getMenuInflater();
+        // Instanciation du menu XML spécifier en un objet Menu
+        inflater.inflate(R.menu.radio_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.menuRadioHasard:
+            
+            
+            return true;
+
+        }
+        return false;
     }
 }

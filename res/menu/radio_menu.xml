@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  
+  <item android:enabled="true" android:title="Au hasard"
+		android:id="@+id/menuRadioHasard" android:icon="@drawable/shuffle"></item>
+  
+</menu>

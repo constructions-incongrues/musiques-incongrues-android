@@ -4,6 +4,7 @@ import roboguice.activity.GuiceListActivity;
 import roboguice.inject.InjectResource;
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +34,18 @@ public class MainActivity extends GuiceListActivity {
 
         setListAdapter(new MainMenuAdapter(this));
     }
-    
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        MediaPlayer player = RadioActivity.mediaPlayer;
+        if (player.isPlaying()) {
+            player.stop();
+            player.release();
+        }
+    }
+
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         Intent gotoPage = new Intent(this, RadioActivity.class);
@@ -70,7 +82,7 @@ public class MainActivity extends GuiceListActivity {
             disclaimer.setText(menuDefinition[1]);
 
             icon.setImageResource(icons[position]);
-            
+
             return row;
         }
     }
