@@ -179,8 +179,7 @@ public class RadioActivity extends GuiceListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.menuRadioHasard:
-            
-            
+            page = data.retrieveShuffledNLinks(10);            
             return true;
 
         }
