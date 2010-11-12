@@ -82,6 +82,7 @@ public class RadioActivity extends GuiceListActivity {
             @Override
             public void onClick(View v) {
                 page = data.retrieveLastNLinks(10);
+                refreshList();
             }
         });
     }
@@ -120,13 +121,15 @@ public class RadioActivity extends GuiceListActivity {
 
             return row;
         }
+       
     }
 
     protected void playSong(String songUrl) {
-
         stopSong(false);
         mediaPlayer.setOnPreparedListener(mediaPlayerAsyncLauncher);
-        tryToLoadSongInPlayer (songUrl, true);
+        tryToLoadSongInPlayer(songUrl, true); // true pour un workaround a
+                                              // propos d'un bug de chargement
+                                              // de resource sur MediaPlayer
         mediaPlayer.prepareAsync();
         Toast.makeText(this, "En cours de chargement ...", 1000).show();
         buffer.setText("En cours de chargement, patientez...");
@@ -185,9 +188,14 @@ public class RadioActivity extends GuiceListActivity {
         switch (item.getItemId()) {
         case R.id.menuRadioHasard:
             page = data.retrieveShuffledNLinks(10);
+            refreshList();
             return true;
 
         }
         return false;
+    }
+    
+    public void refreshList (){
+        ((RadioAdapter)getListAdapter()).notifyDataSetChanged();
     }
 }
