@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="webservice_host">http://data.musiques-incongrues.net</string>
-	<string name="webservice_service_links_mp3">/collections/links/segments/mp3/get?format=json</string>
+	<string name="webservice_service_links">/collections/links/segments/SEGMENT_VALUE/get?format=json</string>
 
 </resources>

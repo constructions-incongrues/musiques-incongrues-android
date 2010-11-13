@@ -6,7 +6,7 @@
 	<string name="radio_buffer">Sélectionnez un morceau dans la liste !</string>
 	<string-array name="main_menu">
 		<item>Radio_Ecouter du son incongru</item>
-		<item>Diaporama_Des photos et images folles (TODO)</item>
+		<item>Diaporama_Des photos et images folles</item>
 		<item>Discussions_Participer au forum (TODO)</item>
 		<item>Télévision_Regarder la TVi sur son téléphone (TODO)</item>
 		<item>Ce soir on sort!_Que se passe t-il ce soir ? (TODO)</item>

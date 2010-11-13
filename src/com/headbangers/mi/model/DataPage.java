@@ -27,6 +27,20 @@ public class DataPage {
     public List<MILinkData> getData() {
         return data;
     }
+    
+    public MILinkData findInList (int position){
+        if (data!=null){
+            return data.get(position);
+        }
+        return null;
+    }
+    
+    public int size(){
+        if (data!=null){
+            return data.size();
+        }
+        return 0;
+    }
      
     public int getNbTotal() {
         return nbTotal;

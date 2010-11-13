@@ -19,7 +19,11 @@
 		<activity android:name=".activity.RadioActivity"
 			android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
-		<activity android:name=".activity.RadioPreferencesActivity"
+		<activity android:name=".activity.preferences.RadioPreferencesActivity"
+			android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar">
+		</activity>
+		
+		<activity android:name=".activity.DiaporamaActivity"
 			android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
 		

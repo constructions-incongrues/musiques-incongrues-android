@@ -18,6 +18,9 @@ import com.headbangers.mi.R;
 
 public class MainActivity extends GuiceListActivity {
 
+    private static final int MENU_RADIO = 0;
+    private static final int MENU_DIAPORAMA = 1;
+
     @InjectResource(R.array.main_menu)
     protected String[] menus;
 
@@ -48,8 +51,20 @@ public class MainActivity extends GuiceListActivity {
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        Intent gotoPage = new Intent(this, RadioActivity.class);
-        startActivity(gotoPage);
+        Intent gotoPage = null;
+
+        switch (position) {
+        case MENU_RADIO:
+            gotoPage = new Intent(this, RadioActivity.class);
+            break;
+        case MENU_DIAPORAMA:
+            gotoPage = new Intent (this, DiaporamaActivity.class);
+            break;
+        }
+
+        if (gotoPage != null) {
+            startActivity(gotoPage);
+        }
     }
 
     class MainMenuAdapter extends ArrayAdapter<String> {

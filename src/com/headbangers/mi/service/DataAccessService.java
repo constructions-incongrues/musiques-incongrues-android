@@ -11,7 +11,7 @@ public interface DataAccessService {
      * @param nb
      * @return
      */
-    DataPage retrieveLastNLinks(int nb);
+    DataPage retrieveLastNLinks(Segment segment, int nb);
 
     /**
      * Retourne N liens sélectionnés au hasard. TODO ajouter le segment de données afin
@@ -20,5 +20,5 @@ public interface DataAccessService {
      * @param nb
      * @return
      */
-    DataPage retrieveShuffledNLinks(int nb);
+    DataPage retrieveShuffledNLinks(Segment segment, int nb);
 }

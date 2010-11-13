@@ -24,9 +24,11 @@ import android.widget.Toast;
 
 import com.google.inject.Inject;
 import com.headbangers.mi.R;
+import com.headbangers.mi.activity.preferences.RadioPreferencesActivity;
 import com.headbangers.mi.model.DataPage;
 import com.headbangers.mi.model.MILinkData;
 import com.headbangers.mi.service.DataAccessService;
+import com.headbangers.mi.service.Segment;
 
 public class RadioActivity extends GuiceListActivity {
 
@@ -70,7 +72,7 @@ public class RadioActivity extends GuiceListActivity {
         
         // TODO : chercher les morceaux dans une base : seul le bouton refresh
         // va chercher sur le net
-        page = data.retrieveLastNLinks(10);
+        page = data.retrieveLastNLinks(Segment.MP3, 10);
         setListAdapter(new RadioAdapter(this));
 
         barStop.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +89,7 @@ public class RadioActivity extends GuiceListActivity {
 
             @Override
             public void onClick(View v) {
-                page = data.retrieveLastNLinks(10);
+                page = data.retrieveLastNLinks(Segment.MP3, 10);
                 refreshList();
             }
         });
@@ -95,7 +97,7 @@ public class RadioActivity extends GuiceListActivity {
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        MILinkData data = page.getData().get(position);
+        MILinkData data = page.findInList(position);
         playSong(data.getUrl());
     }
 
@@ -117,7 +119,7 @@ public class RadioActivity extends GuiceListActivity {
                 row = inflater.inflate(R.layout.one_song, null);
             }
 
-            MILinkData data = page.getData().get(position);
+            MILinkData data = page.findInList(position);
 
             TextView songTitle = (TextView) row.findViewById(R.id.songTitle);
             songTitle.setText(data.getTitle());
@@ -197,7 +199,7 @@ public class RadioActivity extends GuiceListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.menuRadioHasard:
-            page = data.retrieveShuffledNLinks(prefs.getInt("radioPreferences.nbSongs", 10));
+            page = data.retrieveShuffledNLinks(Segment.MP3, prefs.getInt("radioPreferences.nbSongs", 10));
             refreshList();
             return true;
         case R.id.menuRadioPreferences:

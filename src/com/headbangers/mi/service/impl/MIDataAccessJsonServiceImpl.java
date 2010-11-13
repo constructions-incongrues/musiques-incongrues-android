@@ -14,17 +14,19 @@ import com.headbangers.mi.R;
 import com.headbangers.mi.model.DataPage;
 import com.headbangers.mi.model.MILinkData;
 import com.headbangers.mi.service.DataAccessService;
+import com.headbangers.mi.service.Segment;
 
 @SuppressWarnings("unchecked")
 public class MIDataAccessJsonServiceImpl extends WebService implements
         DataAccessService {
 
     public static String NUM_FOUND_JSON = "num_found";
+    public static String SEGMENT_VALUE = "SEGMENT_VALUE";
 
     @InjectResource(R.string.webservice_host)
     private String serviceHost;
 
-    @InjectResource(R.string.webservice_service_links_mp3)
+    @InjectResource(R.string.webservice_service_links)
     private String service;
 
     public MIDataAccessJsonServiceImpl() {
@@ -36,19 +38,22 @@ public class MIDataAccessJsonServiceImpl extends WebService implements
     }
 
     @Override
-    public DataPage retrieveLastNLinks(int nb) {
-        String webServiceUrl = serviceHost + service
+    public DataPage retrieveLastNLinks(Segment segment, int nb) {
+        String webServiceUrl = serviceHost
+                + service.replaceFirst(SEGMENT_VALUE, segment.getValue())
                 + "&sort_direction=desc&limit=" + nb;
         String json = callHttp(webServiceUrl);
 
         return parseJson(json);
     }
-    
+
     @Override
-    public DataPage retrieveShuffledNLinks(int nb) {
-        String webServiceUrl = serviceHost + service + "&sort_field=random&limit="+nb;
+    public DataPage retrieveShuffledNLinks(Segment segment, int nb) {
+        String webServiceUrl = serviceHost
+                + service.replaceFirst(SEGMENT_VALUE, segment.getValue())
+                + "&sort_field=random&limit=" + nb;
         String json = callHttp(webServiceUrl);
-        
+
         return parseJson(json);
     }
 
