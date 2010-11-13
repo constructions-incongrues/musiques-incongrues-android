@@ -5,4 +5,6 @@
   <item android:enabled="true" android:title="Au hasard"
 		android:id="@+id/menuRadioHasard" android:icon="@drawable/shuffle"></item>
   
+  <item android:enabled="true" android:title="Paramètres"
+		android:id="@+id/menuRadioPreferences" android:icon="@drawable/params"></item>
 </menu>

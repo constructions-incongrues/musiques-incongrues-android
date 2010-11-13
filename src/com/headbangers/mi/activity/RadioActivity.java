@@ -6,6 +6,8 @@ import roboguice.activity.GuiceListActivity;
 import roboguice.inject.InjectResource;
 import roboguice.inject.InjectView;
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,6 +32,9 @@ public class RadioActivity extends GuiceListActivity {
 
     protected static MediaPlayer mediaPlayer = new MediaPlayer();
 
+    @Inject
+    protected SharedPreferences prefs;
+    
     @Inject
     private DataAccessService data;
 
@@ -61,10 +66,11 @@ public class RadioActivity extends GuiceListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.radio);
 
+        //prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        
         // TODO : chercher les morceaux dans une base : seul le bouton refresh
         // va chercher sur le net
         page = data.retrieveLastNLinks(10);
-
         setListAdapter(new RadioAdapter(this));
 
         barStop.setOnClickListener(new View.OnClickListener() {
@@ -121,18 +127,19 @@ public class RadioActivity extends GuiceListActivity {
 
             return row;
         }
-       
+
     }
 
     protected void playSong(String songUrl) {
         stopSong(false);
         mediaPlayer.setOnPreparedListener(mediaPlayerAsyncLauncher);
-        tryToLoadSongInPlayer(songUrl, true); // true pour un workaround a
-                                              // propos d'un bug de chargement
-                                              // de resource sur MediaPlayer
-        mediaPlayer.prepareAsync();
-        Toast.makeText(this, "En cours de chargement ...", 1000).show();
-        buffer.setText("En cours de chargement, patientez...");
+        if (tryToLoadSongInPlayer(songUrl, true)) { // true pour un workaround a
+            // propos d'un bug de chargement
+            // de resource sur MediaPlayer
+            mediaPlayer.prepareAsync();
+            Toast.makeText(this, "En cours de chargement ...", 1000).show();
+            buffer.setText("En cours de chargement, patientez...");
+        } 
     }
 
     protected void stopSong(boolean itsOver) {
@@ -150,9 +157,10 @@ public class RadioActivity extends GuiceListActivity {
         }
     }
 
-    private void tryToLoadSongInPlayer(String songUrl, boolean reTryIfFail) {
+    private boolean tryToLoadSongInPlayer(String songUrl, boolean reTryIfFail) {
         try {
             mediaPlayer.setDataSource(songUrl);
+            return true;
         } catch (IllegalArgumentException e) {
             Toast.makeText(
                     this,
@@ -160,7 +168,7 @@ public class RadioActivity extends GuiceListActivity {
                     1000).show();
         } catch (IllegalStateException e) {
             if (reTryIfFail) {
-                tryToLoadSongInPlayer(songUrl, false);
+                return tryToLoadSongInPlayer(songUrl, false);
             } else {
                 e.printStackTrace();
             }
@@ -170,6 +178,8 @@ public class RadioActivity extends GuiceListActivity {
                     "Désolé, je n'ai pas pu lire ce morceau : la chanson n'existe peut-être plus ...",
                     1000).show();
         }
+
+        return false;
     }
 
     @Override
@@ -187,15 +197,18 @@ public class RadioActivity extends GuiceListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.menuRadioHasard:
-            page = data.retrieveShuffledNLinks(10);
+            page = data.retrieveShuffledNLinks(prefs.getInt("radioPreferences.nbSongs", 10));
             refreshList();
             return true;
-
+        case R.id.menuRadioPreferences:
+            Intent intent = new Intent(getBaseContext(), RadioPreferencesActivity.class);
+            startActivity(intent);
+            return true;
         }
         return false;
     }
-    
-    public void refreshList (){
-        ((RadioAdapter)getListAdapter()).notifyDataSetChanged();
+
+    public void refreshList() {
+        ((RadioAdapter) getListAdapter()).notifyDataSetChanged();
     }
 }

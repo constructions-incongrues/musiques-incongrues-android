@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="Préférences Radio">
+		<Preference android:key="@string/radioPreferences.nbSongs"
+			android:summary="Combien de morceaux tu veux ?"
+			android:title="Combien de morceaux ?" android:defaultValue="10" />
+	</PreferenceCategory>
+</PreferenceScreen>
