@@ -123,7 +123,7 @@ public class RadioActivity extends GuiceListActivity {
             songTitle.setText(data.getTitle());
             TextView songContributor = (TextView) row
                     .findViewById(R.id.songContributor);
-            songContributor.setText(data.getContributorName());
+            songContributor.setText(data.getContributorName()+" // "+data.getContributionDate());
 
             return row;
         }
