@@ -170,6 +170,7 @@ public class RadioActivity extends GuiceListActivity {
                     1000).show();
         } catch (IllegalStateException e) {
             if (reTryIfFail) {
+                mediaPlayer = new MediaPlayer();
                 return tryToLoadSongInPlayer(songUrl, false);
             } else {
                 e.printStackTrace();

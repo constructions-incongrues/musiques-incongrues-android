@@ -44,23 +44,24 @@ public final class R {
     public static final class id {
         public static final int actionBar=0x7f0a0004;
         public static final int barRefresh=0x7f0a0006;
-        public static final int barStop=0x7f0a000f;
+        public static final int barStop=0x7f0a0010;
         public static final int dialogNumberInput=0x7f0a0001;
         public static final int dialogNumberMoins=0x7f0a0000;
         public static final int dialogNumberOk=0x7f0a0003;
         public static final int dialogNumberPlus=0x7f0a0002;
-        public static final int diaporamaGallery=0x7f0a0007;
-        public static final int menuDisclaimer=0x7f0a000b;
-        public static final int menuIcon=0x7f0a0009;
-        public static final int menuLabel=0x7f0a000a;
-        public static final int menuRadioHasard=0x7f0a0011;
-        public static final int menuRadioPreferences=0x7f0a0012;
-        public static final int radioBufferText=0x7f0a0010;
-        public static final int songContributor=0x7f0a000e;
-        public static final int songIcon=0x7f0a000c;
-        public static final int songTitle=0x7f0a000d;
+        public static final int diaporamaBufferText=0x7f0a0008;
+        public static final int diaporamaGallery=0x7f0a0009;
+        public static final int menuDisclaimer=0x7f0a000c;
+        public static final int menuIcon=0x7f0a000a;
+        public static final int menuLabel=0x7f0a000b;
+        public static final int menuRadioHasard=0x7f0a0012;
+        public static final int menuRadioPreferences=0x7f0a0013;
+        public static final int radioBufferText=0x7f0a0011;
+        public static final int songContributor=0x7f0a000f;
+        public static final int songIcon=0x7f0a000d;
+        public static final int songTitle=0x7f0a000e;
         public static final int title=0x7f0a0005;
-        public static final int version=0x7f0a0008;
+        public static final int version=0x7f0a0007;
     }
     public static final class layout {
         public static final int dialog_number=0x7f030000;
@@ -76,6 +77,7 @@ public final class R {
     public static final class string {
         public static final int app_name=0x7f060003;
         public static final int app_title=0x7f060004;
+        public static final int diaporama_buffer=0x7f060007;
         public static final int radioPreferences_nbSongs=0x7f060002;
         public static final int radio_buffer=0x7f060006;
         public static final int version=0x7f060005;

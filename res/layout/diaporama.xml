@@ -25,9 +25,16 @@
 		</LinearLayout>
 	</LinearLayout>
 
-	<Gallery android:id="@+id/diaporamaGallery"
-		android:layout_width="fill_parent" android:layout_height="wrap_content" 
-		android:background="@color/light_mi_pink"/>
+	<TextView android:id="@+id/version" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="@string/version"
+		android:textColor="@color/mi_pink" />
 
+	<TextView android:id="@+id/diaporamaBufferText"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:text="@string/diaporama_buffer" android:textColor="@color/mi_pink" />
+
+	<Gallery android:id="@+id/diaporamaGallery"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:background="@color/light_mi_pink" />
 
 </LinearLayout>
