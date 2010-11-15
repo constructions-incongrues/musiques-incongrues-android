@@ -8,6 +8,7 @@ import roboguice.inject.InjectView;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -146,7 +147,7 @@ public class RadioActivity extends GuiceListActivity {
 
     protected void stopSong(boolean itsOver) {
         try {
-            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            if (mediaPlayer != null) {
                 mediaPlayer.stop();
                 mediaPlayer.reset();
             }
@@ -161,6 +162,7 @@ public class RadioActivity extends GuiceListActivity {
 
     private boolean tryToLoadSongInPlayer(String songUrl, boolean reTryIfFail) {
         try {
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setDataSource(songUrl);
             return true;
         } catch (IllegalArgumentException e) {
@@ -174,6 +176,8 @@ public class RadioActivity extends GuiceListActivity {
                 return tryToLoadSongInPlayer(songUrl, false);
             } else {
                 e.printStackTrace();
+                mediaPlayer = new MediaPlayer();
+                buffer.setText("Shiit happens :(");
             }
         } catch (IOException e) {
             Toast.makeText(
