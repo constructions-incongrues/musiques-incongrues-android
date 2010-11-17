@@ -2,7 +2,8 @@
 <resources>
 
 	<style name="MIMenuList" parent="@android:style/Widget.ListView">
-		<item name="android:divider">#ff00ff</item>
+<!--		<item name="android:divider">#ff00ff</item>-->
+        <item name="android:divider">#cccccc</item>
 		<item name="android:dividerHeight">1px</item>
 	</style>
 	

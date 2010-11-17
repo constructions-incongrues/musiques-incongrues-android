@@ -1,45 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:background="#ffffff" android:orientation="vertical">
+  android:layout_width="fill_parent" android:layout_height="fill_parent"
+  android:background="#ffffff" android:orientation="vertical">
 
-	<LinearLayout android:id="@+id/actionBar"
-		android:orientation="horizontal" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:background="@color/mi_pink"
-		android:padding="5dip">
+  <LinearLayout android:id="@+id/actionBar"
+    android:orientation="horizontal" android:layout_width="fill_parent"
+    android:layout_height="wrap_content" android:background="@color/mi_pink"
+    android:padding="5dip">
 
-		<TextView android:id="@+id/title" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:text="@string/app_title"
-			android:textColor="@color/android:white" android:gravity="center"
-			android:layout_gravity="center_vertical" android:textSize="8pt"
-			android:textStyle="bold" android:textColorHighlight="@color/light_mi_pink" />
+    <TextView android:id="@+id/title" android:layout_width="wrap_content"
+      android:layout_height="wrap_content" android:text="@string/app_title"
+      android:textColor="@color/android:white" android:gravity="center"
+      android:layout_gravity="center_vertical" android:textSize="8pt"
+      android:textStyle="bold" android:textColorHighlight="@color/light_mi_pink" />
 
-		<LinearLayout android:id="@+id/actionBar"
-			android:gravity="right" android:orientation="horizontal"
-			android:layout_width="fill_parent" android:layout_height="wrap_content">
-			<ImageButton android:id="@+id/barStop"
-				android:layout_width="wrap_content" android:layout_height="wrap_content"
-				android:src="@drawable/bar_stop" android:background="@color/android:transparent" />
+    <LinearLayout android:id="@+id/actionBar"
+      android:gravity="right" android:orientation="horizontal"
+      android:layout_width="fill_parent" android:layout_height="wrap_content">
 
-			<ImageButton android:id="@+id/barRefresh"
-				android:layout_width="wrap_content" android:layout_height="wrap_content"
-				android:src="@drawable/bar_refresh" android:background="@color/android:transparent"
-				android:paddingLeft="5dip" />
-		</LinearLayout>
-	</LinearLayout>
+      <TextView android:id="@+id/version" android:layout_width="fill_parent"
+        android:layout_height="wrap_content" android:text="@string/version"
+        android:gravity="right" android:textColor="#ffffff" />
 
-	<TextView android:id="@+id/version" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:text="@string/version"
-		android:textColor="@color/mi_pink" />
-		
-	<TextView android:id="@+id/radioBufferText" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:text="@string/radio_buffer"
-		android:textColor="@color/mi_pink" />	
+    </LinearLayout>
+  </LinearLayout>
 
-	<ListView android:id="@android:id/list" android:layout_below="@id/version"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:drawSelectorOnTop="false" android:listSelector="@color/listview"
-		android:cacheColorHint="#ffffff" android:background="#ffffff"
-		style="@style/MIMenuList" />
 
+
+  <TextView android:id="@+id/radioBufferText"
+    android:layout_width="fill_parent" android:layout_height="wrap_content"
+    android:text="@string/radio_buffer" android:paddingLeft="5dip"
+    android:background="@color/light_mi_blue" android:textColor="#000000" />
+
+  <ListView android:id="@android:id/list" android:layout_below="@id/version"
+    android:layout_width="fill_parent" android:layout_height="wrap_content"
+    android:drawSelectorOnTop="false" android:listSelector="@color/listview"
+    android:cacheColorHint="#ffffff" android:background="#ffffff"
+    style="@style/MIMenuList" android:layout_weight="4" />
+
+
+  <LinearLayout android:layout_height="wrap_content"
+    android:layout_width="fill_parent" android:orientation="vertical"
+    android:background="@color/mi_yellow" android:padding="5dip"
+    android:gravity="center">
+
+
+    <LinearLayout android:id="@+id/actionBar"
+      android:layout_height="48px" android:orientation="horizontal"
+      android:layout_width="fill_parent" android:gravity="center">
+
+      <ImageButton android:id="@+id/barPrevious"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:src="@drawable/previous" android:paddingLeft="5dip"
+        android:background="@color/android:transparent" />
+
+      <ImageButton android:id="@+id/barStop"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:src="@drawable/stop" android:paddingLeft="5dip"
+        android:background="@color/android:transparent" />
+
+      <ImageButton android:id="@+id/barPlay"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:src="@drawable/play" android:paddingLeft="5dip"
+        android:background="@color/android:transparent" />
+
+      <ImageButton android:id="@+id/barNext"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:src="@drawable/next" android:paddingLeft="5dip"
+        android:background="@color/android:transparent" />
+
+      <ImageButton android:id="@+id/barRefresh"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:src="@drawable/refresh" android:paddingLeft="5dip"
+        android:background="@color/android:transparent" />
+
+    </LinearLayout>
+    <ProgressBar android:layout_width="fill_parent"
+      android:layout_height="wrap_content" style="?android:attr/progressBarStyleHorizontal"
+      android:id="@+id/progressbar_Horizontal" android:max="100" />
+
+  </LinearLayout>
 </LinearLayout>

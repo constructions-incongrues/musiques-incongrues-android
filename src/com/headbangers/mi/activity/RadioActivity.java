@@ -58,6 +58,7 @@ public class RadioActivity extends GuiceListActivity {
 
     @InjectView(R.id.barStop)
     private ImageButton barStop;
+    
     @InjectView(R.id.barRefresh)
     private ImageButton barRefresh;
 

@@ -2,4 +2,6 @@
 <resources>
     <color name="mi_pink">#ff00ff</color>
     <color name="light_mi_pink">#f1b4f0</color>
+    <color name="light_mi_blue">#E1FFFF</color>
+    <color name="mi_yellow">#ffff00</color>
 </resources>
