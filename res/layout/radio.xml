@@ -41,43 +41,45 @@
 
   <LinearLayout android:layout_height="wrap_content"
     android:layout_width="fill_parent" android:orientation="vertical"
-    android:background="@color/mi_yellow" android:padding="5dip"
-    android:gravity="center">
-
+    android:background="@color/mi_yellow"
+    android:gravity="center" android:padding="2dip">
 
     <LinearLayout android:id="@+id/actionBar"
-      android:layout_height="48px" android:orientation="horizontal"
+      android:layout_height="wrap_content" android:orientation="horizontal"
       android:layout_width="fill_parent" android:gravity="center">
 
       <ImageButton android:id="@+id/barPrevious"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:src="@drawable/previous" android:paddingLeft="5dip"
+        android:src="@color/stream_previous" android:paddingLeft="5dip"
         android:background="@color/android:transparent" />
 
       <ImageButton android:id="@+id/barStop"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:src="@drawable/stop" android:paddingLeft="5dip"
+        android:src="@color/stream_stop" android:paddingLeft="5dip"
         android:background="@color/android:transparent" />
 
       <ImageButton android:id="@+id/barPlay"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:src="@drawable/play" android:paddingLeft="5dip"
+        android:src="@color/stream_play" android:paddingLeft="5dip"
         android:background="@color/android:transparent" />
 
       <ImageButton android:id="@+id/barNext"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:src="@drawable/next" android:paddingLeft="5dip"
+        android:src="@color/stream_next" android:paddingLeft="5dip"
         android:background="@color/android:transparent" />
 
       <ImageButton android:id="@+id/barRefresh"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:src="@drawable/refresh" android:paddingLeft="5dip"
+        android:src="@color/stream_refresh" android:paddingLeft="5dip"
         android:background="@color/android:transparent" />
 
     </LinearLayout>
     <ProgressBar android:layout_width="fill_parent"
-      android:layout_height="wrap_content" style="?android:attr/progressBarStyleHorizontal"
-      android:id="@+id/progressbar_Horizontal" android:max="100" />
+      android:layout_height="wrap_content" 
+      android:progressDrawable="@drawable/mi_progress_bar"
+      style="?android:attr/progressBarStyleHorizontal"
+      android:id="@+id/streamBar" android:max="100" android:background="#000000" 
+      />
 
   </LinearLayout>
 </LinearLayout>
