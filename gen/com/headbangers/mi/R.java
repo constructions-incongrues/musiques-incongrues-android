@@ -57,11 +57,12 @@ public final class R {
         public static final int refresh=0x7f02001c;
         public static final int refresh_focused=0x7f02001d;
         public static final int refresh_pressed=0x7f02001e;
-        public static final int shuffle=0x7f02001f;
-        public static final int song=0x7f020020;
-        public static final int stop=0x7f020021;
-        public static final int stop_focused=0x7f020022;
-        public static final int stop_pressed=0x7f020023;
+        public static final int save=0x7f02001f;
+        public static final int shuffle=0x7f020020;
+        public static final int song=0x7f020021;
+        public static final int stop=0x7f020022;
+        public static final int stop_focused=0x7f020023;
+        public static final int stop_pressed=0x7f020024;
     }
     public static final class id {
         public static final int actionBar=0x7f0a0004;
@@ -79,8 +80,9 @@ public final class R {
         public static final int menuDisclaimer=0x7f0a000b;
         public static final int menuIcon=0x7f0a0009;
         public static final int menuLabel=0x7f0a000a;
-        public static final int menuRadioHasard=0x7f0a0016;
-        public static final int menuRadioPreferences=0x7f0a0017;
+        public static final int menuRadioHasard=0x7f0a0017;
+        public static final int menuRadioPreferences=0x7f0a0018;
+        public static final int menuSongDownload=0x7f0a0016;
         public static final int radioBufferText=0x7f0a000f;
         public static final int songContributor=0x7f0a000e;
         public static final int songIcon=0x7f0a000c;
@@ -98,15 +100,17 @@ public final class R {
         public static final int radio=0x7f030005;
     }
     public static final class menu {
-        public static final int radio_menu=0x7f090000;
+        public static final int one_song_menu=0x7f090000;
+        public static final int radio_menu=0x7f090001;
     }
     public static final class string {
-        public static final int app_name=0x7f060003;
-        public static final int app_title=0x7f060004;
-        public static final int diaporama_buffer=0x7f060007;
+        public static final int app_name=0x7f060004;
+        public static final int app_title=0x7f060005;
+        public static final int diaporama_buffer=0x7f060008;
+        public static final int radioPreferences_downloadPath=0x7f060003;
         public static final int radioPreferences_nbSongs=0x7f060002;
-        public static final int radio_buffer=0x7f060006;
-        public static final int version=0x7f060005;
+        public static final int radio_buffer=0x7f060007;
+        public static final int version=0x7f060006;
         public static final int webservice_host=0x7f060000;
         public static final int webservice_service_links=0x7f060001;
     }
