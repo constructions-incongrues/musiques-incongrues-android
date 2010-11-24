@@ -13,24 +13,18 @@ public class ProgressBarThread implements Runnable {
     public ProgressBarThread(ProgressBar toUpdate, MediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
         this.progressBar = toUpdate;
+
     }
 
     @Override
     public void run() {
-
+        progressBar.setProgress(0);
         while (mediaPlayer.isPlaying()
                 && (current = mediaPlayer.getCurrentPosition()) <= (total = mediaPlayer
                         .getDuration())) {
 
-            // try {
-            // Thread.sleep(100);
-            // pourcentage
             progressBar.setProgress((current * 100) / total);
-            // } catch (InterruptedException e) {
-            // }
         }
-        
-        progressBar.setProgress(0);
 
     }
 

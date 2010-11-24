@@ -39,16 +39,18 @@ public class DiaporamaActivity extends GuiceActivity {
 
         page = data.retrieveLastNLinks(Segment.IMAGES, 10);
         diapoGallery.setAdapter(new DiaporamaGalleryAdapter(this));
-        
-        diapoGallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @Override
-            @SuppressWarnings("rawtypes")
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
-               
-            }
-            
-        });
+        diapoGallery
+                .setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    @SuppressWarnings("rawtypes")
+                    public void onItemClick(AdapterView parent, View v,
+                            int position, long id) {
+
+                    }
+
+                });
     }
 
     class DiaporamaGalleryAdapter extends BaseAdapter {
@@ -79,16 +81,19 @@ public class DiaporamaActivity extends GuiceActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             ImageView i = new ImageView(context);
 
-            Bitmap bm = BitmapFactory.decodeStream(http.downloadFile(page
-                    .findInList(position).getUrl()));
-            i.setImageBitmap(bm);
+            if (page.findInList(position).getCachedBitmap() == null) {
+                Bitmap bm = BitmapFactory.decodeStream(http.downloadFile(page
+                        .findInList(position).getUrl()));
+                Bitmap scaledAndCacheable = Bitmap.createScaledBitmap(bm, 500, 500, true);
+                page.findInList(position).setCachedBitmap(scaledAndCacheable);
+            }
+
+            i.setImageBitmap(page.findInList(position).getCachedBitmap());
             i.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
             return i;
 
         }
-
-        
 
     }
 }

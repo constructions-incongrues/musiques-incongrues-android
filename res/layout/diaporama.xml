@@ -32,6 +32,6 @@
 
   <Gallery android:id="@+id/diaporamaGallery"
     android:layout_width="fill_parent" android:layout_height="fill_parent"
-    android:background="@color/light_mi_pink" />
+    android:background="#ffffff" android:persistentDrawingCache="all" />
 
 </LinearLayout>

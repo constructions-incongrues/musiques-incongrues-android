@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.headbangers.mi.R;
+import com.headbangers.mi.tools.AudioPlayer;
 
 public class MainActivity extends GuiceListActivity {
 
@@ -42,7 +43,7 @@ public class MainActivity extends GuiceListActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        MediaPlayer player = RadioActivity.mediaPlayer;
+        MediaPlayer player = AudioPlayer.androidMediaPlayer;
         if (player.isPlaying()) {
             player.stop();
             player.release();
