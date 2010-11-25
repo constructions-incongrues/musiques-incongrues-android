@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-  xmlns:android="http://schemas.android.com/apk/res/android">
-  
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
   <item android:enabled="true" android:title="Au hasard"
-		android:id="@+id/menuRadioHasard" android:icon="@drawable/shuffle"></item>
-  
+    android:id="@+id/menuRadioHasard" android:icon="@drawable/shuffle"></item>
+
+  <item android:enabled="true" android:title="Les 10 suivantes"
+    android:id="@+id/menuRadioNext10" android:icon="@drawable/next10"></item>
+
   <item android:enabled="true" android:title="Paramètres"
-		android:id="@+id/menuRadioPreferences" android:icon="@drawable/params"></item>
+    android:id="@+id/menuRadioPreferences" android:icon="@drawable/params"></item>
 </menu>

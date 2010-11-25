@@ -5,7 +5,8 @@ import java.io.InputStream;
 
 public interface HttpService {
 
-    public static String DEFAULT_PATH = "/data/data/com.headbangers.mi/";
+//    public static String DEFAULT_PATH = "/data/data/com.headbangers.mi/";
+    public static String DEFAULT_PATH = "Music/";
     
     InputStream downloadFile(String fileUrl);
     

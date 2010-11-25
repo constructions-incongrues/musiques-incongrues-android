@@ -48,6 +48,19 @@ public class MIDataAccessJsonServiceImpl extends WebService implements
     }
 
     @Override
+    public DataPage retrieveRangeLinks(Segment segment, int offset, int max) {
+        String webServiceUrl = serviceHost
+                + service.replaceFirst(SEGMENT_VALUE, segment.getValue())
+                + "&sort_direction=desc&limit=" + (offset+max);// +"&offset="+offset;
+        String json = callHttp(webServiceUrl);
+        
+        DataPage page = parseJson(json);
+        page.filter (offset, max);
+        
+        return page;
+    }
+
+    @Override
     public DataPage retrieveShuffledNLinks(Segment segment, int nb) {
         String webServiceUrl = serviceHost
                 + service.replaceFirst(SEGMENT_VALUE, segment.getValue())

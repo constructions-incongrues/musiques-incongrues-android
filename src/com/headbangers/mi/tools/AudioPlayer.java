@@ -25,6 +25,8 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener,
     public static String TAG = "AudioPlayer";
 
     public static MediaPlayer androidMediaPlayer = new MediaPlayer();
+    public static int currentOffset = 0;
+    
     private static Integer currentSongNumber = null;
     private static int forced = 0;
 
@@ -61,7 +63,7 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener,
 
     public void stopSong() {
         try {
-            // androidMediaPlayer.stop();
+            androidMediaPlayer.stop();
             androidMediaPlayer.reset();
             associatedProgressBar.setSecondaryProgress(0);
             associatedProgressBar.setProgress(0);
@@ -79,15 +81,20 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener,
     }
 
     protected void forceToReplayTheSelectedSong() {
-        if (forced <= 5) {
-            playSong(currentSongNumber);
-        } else {
-            Toast.makeText(
-                    context,
-                    "Il y a un problème avec le morceau. Impossible de la lire après 5 essais. Sorry",
-                    1500).show();
-            forced = 0;
-            nextSong();
+        if (currentSongNumber != null) {
+            if (forced <= 5) {
+                playSong(currentSongNumber);
+            } else {
+                Toast.makeText(
+                        context,
+                        "Il y a un problème avec le morceau"
+                                + playlist.findInList(currentSongNumber)
+                                        .getTitle()
+                                + ". Impossible de le lire après 5 essais. Sorry ...",
+                        1500).show();
+                forced = 0;
+                nextSong();
+            }
         }
     }
 

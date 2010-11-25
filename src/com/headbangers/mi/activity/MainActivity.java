@@ -45,6 +45,7 @@ public class MainActivity extends GuiceListActivity {
 
         MediaPlayer player = AudioPlayer.androidMediaPlayer;
         if (player.isPlaying()) {
+            player.setOnCompletionListener(null);
             player.stop();
             player.release();
         }

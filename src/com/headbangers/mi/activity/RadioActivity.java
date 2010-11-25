@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,7 +28,6 @@ import com.headbangers.mi.activity.preferences.RadioPreferencesActivity;
 import com.headbangers.mi.model.DataPage;
 import com.headbangers.mi.model.MILinkData;
 import com.headbangers.mi.service.DataAccessService;
-import com.headbangers.mi.service.HttpService;
 import com.headbangers.mi.service.Segment;
 import com.headbangers.mi.tools.AudioPlayer;
 
@@ -43,9 +41,6 @@ public class RadioActivity extends GuiceListActivity {
 
     @Inject
     private DataAccessService data;
-
-    @Inject
-    private HttpService http;
 
     private DataPage page;
 
@@ -191,6 +186,12 @@ public class RadioActivity extends GuiceListActivity {
                     RadioPreferencesActivity.class);
             startActivity(intent);
             return true;
+        case R.id.menuRadioNext10:
+            page = data.retrieveRangeLinks(Segment.MP3,
+                    AudioPlayer.currentOffset+10, 10);
+            AudioPlayer.currentOffset += 10;
+            notifyListToCleanup();
+            return true;
         }
         return false;
     }
@@ -203,17 +204,10 @@ public class RadioActivity extends GuiceListActivity {
                     .show();
             final AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item
                     .getMenuInfo();
-            new Thread(new Runnable() {
 
-                @Override
-                public void run() {
-                    MILinkData data = page.findInList(menuInfo.position);
-                    http.downloadFileAndWriteItOnDevice(data.getUrl(),
-                            data.getTitle(), null);
-                }
-
-            }).start();
-
+            final MILinkData data = page.findInList(menuInfo.position);
+            DownloadManagerActivity.addDownload(data.getTitle(), data.getUrl());
+            startActivity(new Intent(this, DownloadManagerActivity.class));
             return true;
         }
         return false;

@@ -9,8 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.apache.http.util.ByteArrayBuffer;
-
+import android.os.Environment;
 import android.util.Log;
 
 import com.headbangers.mi.service.HttpService;
@@ -45,31 +44,39 @@ public class HttpServiceImpl implements HttpService {
     @Override
     public boolean downloadFileAndWriteItOnDevice(String fileUrl,
             String fileName, String path) {
-        // TODO Auto-generated method stub
+
         InputStream stream = downloadFile(fileUrl);
         if (stream != null) {
 
             try {
-                BufferedInputStream bis = new BufferedInputStream(stream);
-//                ByteArrayBuffer baf = new ByteArrayBuffer(50);
-//
-//                int current = 0;
-//                while ((current = bis.read()) != -1) {
-//                    baf.append((byte) current);
-//                }
+                BufferedInputStream bis = new BufferedInputStream(stream, 8192);
+                // ByteArrayBuffer baf = new ByteArrayBuffer(50);
+                //
+                // int current = 0;
+                // while ((current = bis.read()) != -1) {
+                // baf.append((byte) current);
+                // }
 
-                File file = new File((path != null ? path
-                        : HttpService.DEFAULT_PATH) + fileName);
+                File root = Environment.getExternalStorageDirectory();
+                root.mkdir();
+                File storage = new File (root, "Music/");
+                storage.mkdir();
+                File file = new File(storage, fileName);
 
                 FileOutputStream fos = new FileOutputStream(file);
-                int current = 0;
-                while ((current = bis.read()) != -1) {
-                    fos.write(current);
+                int current;
+//                byte[] buffer = new byte[8192];
+//                while (bis.read(buffer) != -1){
+//                    fos.write(buffer);
+//                }
+
+                while ((current = bis.read()) !=  -1){
+                    fos.write (current);
                 }
                 
-//                fos.write(baf.toByteArray());
+                // fos.write(baf.toByteArray());
                 fos.close();
-                
+
                 return true;
 
             } catch (IOException e) {

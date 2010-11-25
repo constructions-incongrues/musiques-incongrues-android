@@ -45,4 +45,8 @@ public class DataPage {
     public int getNbTotal() {
         return nbTotal;
     }
+
+    public void filter(int offset, int max) {
+        this.data = this.data.subList(offset, offset+max);        
+    }
 }
