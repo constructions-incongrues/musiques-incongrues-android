@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -36,7 +37,6 @@ public class RadioActivity extends GuiceListActivity {
 
     private AudioPlayer audioPlayer;
 
-    @Inject
     protected SharedPreferences prefs;
 
     @Inject
@@ -66,11 +66,12 @@ public class RadioActivity extends GuiceListActivity {
         // ANDROID TECHNIQUE
         super.onCreate(savedInstanceState);
         setContentView(R.layout.radio);
-        registerForContextMenu(getListView());
+        registerForContextMenu(getListView());        
+        prefs = PreferenceManager.getDefaultSharedPreferences(this
+                .getApplicationContext());
 
-        // prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-        page = data.retrieveLastNLinks(Segment.MP3, 10);
+        page = data.retrieveLastNLinks(Segment.MP3,
+                prefs.getInt("radioPreferences.nbSongs", 10));
         setListAdapter(new RadioAdapter(this));
 
         audioPlayer = new AudioPlayer(this, page, progressBar, buffer);
@@ -87,7 +88,8 @@ public class RadioActivity extends GuiceListActivity {
 
             @Override
             public void onClick(View v) {
-                page = data.retrieveLastNLinks(Segment.MP3, 10);
+                page = data.retrieveLastNLinks(Segment.MP3,
+                        prefs.getInt("radioPreferences.nbSongs", 10));
                 notifyListToCleanup();
             }
         });
@@ -177,8 +179,10 @@ public class RadioActivity extends GuiceListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.menuRadioHasard:
-            page = data.retrieveShuffledNLinks(Segment.MP3,
-                    prefs.getInt("radioPreferences.nbSongs", 10));
+            page = data.retrieveShuffledNLinks(
+                    Segment.MP3,
+                    prefs.getInt("radioPreferences.nbSongs",
+                            prefs.getInt("radioPreferences.nbSongs", 10)));
             notifyListToCleanup();
             return true;
         case R.id.menuRadioPreferences:
@@ -187,9 +191,10 @@ public class RadioActivity extends GuiceListActivity {
             startActivity(intent);
             return true;
         case R.id.menuRadioNext10:
+            int nb = prefs.getInt("radioPreferences.nbSongs", 10);
             page = data.retrieveRangeLinks(Segment.MP3,
-                    AudioPlayer.currentOffset+10, 10);
-            AudioPlayer.currentOffset += 10;
+                    AudioPlayer.currentOffset + nb, nb);
+            AudioPlayer.currentOffset += nb;
             notifyListToCleanup();
             return true;
         }

@@ -1,12 +1,12 @@
 package com.headbangers.mi.activity.preferences;
 
 import roboguice.activity.GuicePreferenceActivity;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,8 +29,8 @@ public class RadioPreferencesActivity extends GuicePreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        preferences = this.getApplicationContext().getSharedPreferences(
-                "musiques-incongrues-android", Activity.MODE_PRIVATE);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this
+                .getApplicationContext());
 
         addPreferencesFromResource(R.xml.radio_preferences);
 
@@ -97,9 +97,7 @@ public class RadioPreferencesActivity extends GuicePreferenceActivity {
     }
 
     protected void saveNumber() {
-        SharedPreferences customSharedPreference = getSharedPreferences(
-                "musiques-incongrues-android", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = customSharedPreference.edit();
+        SharedPreferences.Editor editor = preferences.edit();
 
         String value = dialogNumberInput.getText().toString();
         int converted = 9;

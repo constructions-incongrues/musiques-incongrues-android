@@ -4,7 +4,7 @@
   <item android:enabled="true" android:title="Au hasard"
     android:id="@+id/menuRadioHasard" android:icon="@drawable/shuffle"></item>
 
-  <item android:enabled="true" android:title="Les 10 suivantes"
+  <item android:enabled="true" android:title="Les suivantes !!"
     android:id="@+id/menuRadioNext10" android:icon="@drawable/next10"></item>
 
   <item android:enabled="true" android:title="Paramètres"

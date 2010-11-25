@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import roboguice.activity.GuiceListActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.inject.Inject;
@@ -17,6 +18,8 @@ public class DownloadManagerActivity extends GuiceListActivity {
     private static List<DownloadObject> objects = new ArrayList<DownloadObject>();
 
     private static HttpService http = new HttpServiceImpl();
+    
+    protected SharedPreferences prefs;
     
     public static void addDownload(final String name, final String url) {
         DownloadObject object = new DownloadObject(name, url);
