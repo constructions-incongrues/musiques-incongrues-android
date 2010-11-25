@@ -170,7 +170,8 @@ public class RadioActivity extends GuiceListActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
             ContextMenuInfo menuInfo) {
-
+        TextView title = (TextView) v.findViewById(R.id.songTitle);
+        menu.setHeaderTitle(title.getText());
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.one_song_menu, menu);
     }
