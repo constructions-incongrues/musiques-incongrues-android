@@ -5,7 +5,7 @@
       android:summary="Combien de morceaux tu veux ?" android:title="Combien de morceaux ?"
       android:defaultValue="10" />
 
-    <Preference android:key="@string/radioPreferences.downloadPath"
+    <EditTextPreference android:key="@string/radioPreferences.downloadPath"
       android:summary="Répertoire pour l'enregistrement des morceaux"
       android:title="Répertoire sauvegarde" />
   </PreferenceCategory>
