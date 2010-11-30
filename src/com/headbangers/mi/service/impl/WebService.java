@@ -26,50 +26,52 @@ import android.util.Log;
 public class WebService {
 
     public static String TAG = "WEBSERVICE";
-	
-	protected ObjectMapper jsonMapper;
 
-	public WebService() {
-		this.jsonMapper = new ObjectMapper();
-	}
+    protected ObjectMapper jsonMapper;
 
-	protected String callHttp(String url) {
+    public WebService() {
+        this.jsonMapper = new ObjectMapper();
+    }
 
-		HttpGet getMethod = new HttpGet(url);	
-		Log.i(TAG, "Appel de l'url "+url);
-		return callAndGetResponseAsString(getMethod);
-	}
-	
-	private String callAndGetResponseAsString (HttpRequestBase request){
-	    HttpClient httpclient = new DefaultHttpClient();
-	    try {
+    protected String callHttp(String url) {
 
+        HttpGet getMethod = new HttpGet(url);
+        Log.i(TAG, "Appel de l'url " + url);
+        return callAndGetResponseAsString(getMethod);
+    }
+
+    private String callAndGetResponseAsString(HttpRequestBase request) {
+        HttpClient httpclient = new DefaultHttpClient();
+        request.getParams().setParameter("http.socket.timeout",
+                new Integer(20000));
+
+        try {
             HttpResponse response = httpclient.execute(request);
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     response.getEntity().getContent()));
-            
+
             return reader.readLine();
-            
+
         } catch (ClientProtocolException e) {
         } catch (IOException e) {
-            Log.d(TAG,"Erreur : "+e);
+            Log.d(TAG, "Erreur : " + e);
         }
 
         return null;
-	}
-	
-	protected String callHttp (String url, Map<String, String> postParams){
-	    HttpPost postMethod  = new HttpPost(url);
-	    List<NameValuePair> params = new ArrayList<NameValuePair>();
-	    for (Entry<String, String> entry : postParams.entrySet()){
-	        params.add(new BasicNameValuePair (entry.getKey(), entry.getValue()));
-	    }
-	    try {
+    }
+
+    protected String callHttp(String url, Map<String, String> postParams) {
+        HttpPost postMethod = new HttpPost(url);
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        for (Entry<String, String> entry : postParams.entrySet()) {
+            params.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+        }
+        try {
             postMethod.setEntity(new UrlEncodedFormEntity(params));
             return callAndGetResponseAsString(postMethod);
         } catch (UnsupportedEncodingException e) {
         }
-        
+
         return null;
-	}
+    }
 }

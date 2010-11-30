@@ -1,6 +1,7 @@
 package com.headbangers.mi.service.impl;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,7 +28,6 @@ public class HttpServiceImpl implements HttpService {
             Log.d(TAG, "Récpuration du fichier " + fileUrl);
             HttpURLConnection conn = (HttpURLConnection) fileEncodedUrl
                     .openConnection();
-            conn.setDoInput(true);
             conn.connect();
 
             return conn.getInputStream();
@@ -42,41 +42,30 @@ public class HttpServiceImpl implements HttpService {
     }
 
     @Override
-    public boolean downloadFileAndWriteItOnDevice(String fileUrl,
-            String fileName, String path) {
-
-        InputStream stream = downloadFile(fileUrl);
+    public boolean downloadFileAndWriteItOnDevice(InputStream stream,
+            String filename, String path) {
         if (stream != null) {
 
             try {
                 BufferedInputStream bis = new BufferedInputStream(stream, 8192);
-                // ByteArrayBuffer baf = new ByteArrayBuffer(50);
-                //
-                // int current = 0;
-                // while ((current = bis.read()) != -1) {
-                // baf.append((byte) current);
-                // }
 
                 File root = Environment.getExternalStorageDirectory();
                 root.mkdir();
-                File storage = new File (root, "Music/");
-                storage.mkdir();
-                File file = new File(storage, fileName);
+                File storage = new File(root, path);
+                storage.mkdirs();
+                File file = new File(storage, filename);
 
                 FileOutputStream fos = new FileOutputStream(file);
+                BufferedOutputStream bos = new BufferedOutputStream(fos, 8192);
                 int current;
-//                byte[] buffer = new byte[8192];
-//                while (bis.read(buffer) != -1){
-//                    fos.write(buffer);
-//                }
 
-                while ((current = bis.read()) !=  -1){
-                    fos.write (current);
+                while ((current = bis.read()) != -1) {
+                    bos.write(current);
                 }
-                
-                // fos.write(baf.toByteArray());
-                fos.close();
 
+                bis.close();
+                fos.close();
+                bos.close();
                 return true;
 
             } catch (IOException e) {
@@ -85,6 +74,14 @@ public class HttpServiceImpl implements HttpService {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean downloadFileAndWriteItOnDevice(String fileUrl,
+            String filename, String path) {
+
+        InputStream stream = downloadFile(fileUrl);
+        return downloadFileAndWriteItOnDevice(stream, filename, path);
     }
 
 }

@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,10 +27,10 @@ import android.widget.Toast;
 import com.google.inject.Inject;
 import com.headbangers.mi.R;
 import com.headbangers.mi.activity.preferences.RadioPreferencesActivity;
+import com.headbangers.mi.activity.thread.LoadRadioTracksAsyncTask;
 import com.headbangers.mi.model.DataPage;
 import com.headbangers.mi.model.MILinkData;
 import com.headbangers.mi.service.DataAccessService;
-import com.headbangers.mi.service.Segment;
 import com.headbangers.mi.tools.AudioPlayer;
 
 public class RadioActivity extends GuiceListActivity {
@@ -42,7 +43,7 @@ public class RadioActivity extends GuiceListActivity {
     @Inject
     private DataAccessService data;
 
-    private DataPage page;
+    private DataPage page = new DataPage();
 
     @InjectView(R.id.barStop)
     private ImageButton barStop;
@@ -66,15 +67,14 @@ public class RadioActivity extends GuiceListActivity {
         // ANDROID TECHNIQUE
         super.onCreate(savedInstanceState);
         setContentView(R.layout.radio);
-        registerForContextMenu(getListView());        
+        registerForContextMenu(getListView());
         prefs = PreferenceManager.getDefaultSharedPreferences(this
                 .getApplicationContext());
 
-        page = data.retrieveLastNLinks(Segment.MP3,
-                prefs.getInt("radioPreferences.nbSongs", 10));
-        setListAdapter(new RadioAdapter(this));
-
+        setListAdapter(new RadioAdapter(RadioActivity.this));
         audioPlayer = new AudioPlayer(this, page, progressBar, buffer);
+
+        loadAsyncList(LoadRadioTracksAsyncTask.SEARCH_TYPE_FIRST, 0);
 
         barStop.setOnClickListener(new View.OnClickListener() {
 
@@ -88,9 +88,7 @@ public class RadioActivity extends GuiceListActivity {
 
             @Override
             public void onClick(View v) {
-                page = data.retrieveLastNLinks(Segment.MP3,
-                        prefs.getInt("radioPreferences.nbSongs", 10));
-                notifyListToCleanup();
+                loadAsyncList(LoadRadioTracksAsyncTask.SEARCH_TYPE_FIRST, 0);
             }
         });
 
@@ -121,14 +119,16 @@ public class RadioActivity extends GuiceListActivity {
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
+        if (audioPlayer.getCurrentSongNumber() >= 0) {
+            ((RadioAdapter) getListAdapter())
+                    .undecoratePreviouslyPlayedSong(audioPlayer
+                            .getCurrentSongNumber());
+        }
         audioPlayer.playSong(position);
-        // ImageView songIcon = (ImageView) v.findViewById(R.id.songIcon);
-        // if (songIcon!=null){
-        // songIcon.setImageResource(R.drawable.grapp01);
-        // }
+        ((RadioAdapter) getListAdapter()).decorateCurrentlyPlayedSong(position);
     }
 
-    class RadioAdapter extends ArrayAdapter<MILinkData> {
+    public class RadioAdapter extends ArrayAdapter<MILinkData> {
 
         private Activity context;
 
@@ -137,10 +137,25 @@ public class RadioActivity extends GuiceListActivity {
             this.context = context;
         }
 
+        public void decorateCurrentlyPlayedSong(int position) {
+            View v = getView(position, null, null);
+            if (v != null) {
+                ImageView image = (ImageView) v.findViewById(R.id.songIcon);
+                image.setImageResource(R.drawable.grapp01);// todo change icon
+            }
+        }
+
+        public void undecoratePreviouslyPlayedSong(int position) {
+            View v = getView(position, null, null);
+            if (v != null) {
+                ImageView image = (ImageView) v.findViewById(R.id.songIcon);
+                image.setImageResource(R.drawable.song);
+            }
+        }
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View row = convertView;
-
             if (row == null) {
                 LayoutInflater inflater = context.getLayoutInflater();
                 row = inflater.inflate(R.layout.one_song, null);
@@ -180,11 +195,7 @@ public class RadioActivity extends GuiceListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.menuRadioHasard:
-            page = data.retrieveShuffledNLinks(
-                    Segment.MP3,
-                    prefs.getInt("radioPreferences.nbSongs",
-                            prefs.getInt("radioPreferences.nbSongs", 10)));
-            notifyListToCleanup();
+            loadAsyncList(LoadRadioTracksAsyncTask.SEARCH_TYPE_RANDOM, 0);
             return true;
         case R.id.menuRadioPreferences:
             Intent intent = new Intent(getBaseContext(),
@@ -193,10 +204,9 @@ public class RadioActivity extends GuiceListActivity {
             return true;
         case R.id.menuRadioNext10:
             int nb = prefs.getInt("radioPreferences.nbSongs", 10);
-            page = data.retrieveRangeLinks(Segment.MP3,
-                    AudioPlayer.currentOffset + nb, nb);
+            loadAsyncList(LoadRadioTracksAsyncTask.SEARCH_TYPE_PAGE,
+                    AudioPlayer.currentOffset + nb);
             AudioPlayer.currentOffset += nb;
-            notifyListToCleanup();
             return true;
         }
         return false;
@@ -219,8 +229,24 @@ public class RadioActivity extends GuiceListActivity {
         return false;
     }
 
-    private void notifyListToCleanup() {
-        audioPlayer.setPlaylist(page);
-        ((RadioAdapter) getListAdapter()).notifyDataSetChanged();
+    public void fillList(DataPage page) {
+
+        if (page != null) {
+            RadioAdapter adapter = (RadioAdapter) getListAdapter();
+            adapter.clear();
+            this.page = page;
+            audioPlayer.setPlaylist(page);
+            for (MILinkData link : page.getData()) {
+                adapter.add(link);
+            }
+        } else {
+            Toast.makeText(this, "Problème lors du chargement, réessayez !",
+                    1000).show();
+        }
+    }
+
+    public void loadAsyncList(int type, int offset) {
+        new LoadRadioTracksAsyncTask(this, data).execute(type,
+                prefs.getInt("radioPreferences.nbSongs", 10), offset);
     }
 }

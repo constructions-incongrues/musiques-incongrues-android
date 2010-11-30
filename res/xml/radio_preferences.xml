@@ -7,6 +7,6 @@
 
     <EditTextPreference android:key="@string/radioPreferences.downloadPath"
       android:summary="Répertoire pour l'enregistrement des morceaux"
-      android:title="Répertoire sauvegarde" android:defaultValue="Musiques-Incongrues/"/>
+      android:title="Répertoire sauvegarde" android:defaultValue="Musique/"/>
   </PreferenceCategory>
 </PreferenceScreen>

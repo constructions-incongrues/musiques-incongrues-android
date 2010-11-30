@@ -2,4 +2,5 @@
 <resources>
   <string name="radioPreferences.nbSongs">radioPreferences.nbSongs</string>
   <string name="radioPreferences.downloadPath">radioPreferences.dowloadPath</string>
+  <string name="diaporamaPreferences.nbImages">diaporamaPreferences.nbImages</string>
 </resources>

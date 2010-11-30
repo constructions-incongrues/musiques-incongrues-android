@@ -51,12 +51,12 @@ public class MIDataAccessJsonServiceImpl extends WebService implements
     public DataPage retrieveRangeLinks(Segment segment, int offset, int max) {
         String webServiceUrl = serviceHost
                 + service.replaceFirst(SEGMENT_VALUE, segment.getValue())
-                + "&sort_direction=desc&limit=" + (offset+max);// +"&offset="+offset;
+                + "&sort_direction=desc&limit=" + (offset + max);// +"&offset="+offset;
         String json = callHttp(webServiceUrl);
-        
+
         DataPage page = parseJson(json);
-        page.filter (offset, max);
-        
+        page.filter(offset, max);
+
         return page;
     }
 
@@ -71,29 +71,31 @@ public class MIDataAccessJsonServiceImpl extends WebService implements
     }
 
     private DataPage parseJson(String json) {
-        try {
-            Map<String, Object> all = jsonMapper.readValue(json, Map.class);
-            DataPage page = new DataPage();
-            for (Entry<String, Object> entry : all.entrySet()) {
+        if (json != null) {
+            try {
+                Map<String, Object> all = jsonMapper.readValue(json, Map.class);
+                DataPage page = new DataPage();
+                for (Entry<String, Object> entry : all.entrySet()) {
 
-                if (entry.getKey().equals(NUM_FOUND_JSON)) {
-                    page.setTotal((Integer) entry.getValue());
-                } else {
-                    page.add(new MILinkData((Map<String, Object>) entry
-                            .getValue()));
+                    if (entry.getKey().equals(NUM_FOUND_JSON)) {
+                        page.setTotal((Integer) entry.getValue());
+                    } else {
+                        page.add(new MILinkData((Map<String, Object>) entry
+                                .getValue()));
+                    }
                 }
+
+                return page;
+
+            } catch (JsonParseException e) {
+                Log.d(TAG, "Erreur de parsing JSON", e);
+            } catch (JsonMappingException e) {
+                Log.d(TAG, "Erreur de mapping JSON", e);
+            } catch (IOException e) {
+                Log.d(TAG, "Erreur de lecture JSON", e);
             }
 
-            return page;
-
-        } catch (JsonParseException e) {
-            Log.d(TAG, "Erreur de parsing JSON", e);
-        } catch (JsonMappingException e) {
-            Log.d(TAG, "Erreur de mapping JSON", e);
-        } catch (IOException e) {
-            Log.d(TAG, "Erreur de lecture JSON", e);
         }
-
         return null;
     }
 

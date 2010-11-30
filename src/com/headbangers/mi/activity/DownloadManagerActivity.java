@@ -7,7 +7,6 @@ import roboguice.activity.GuiceListActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.google.inject.Inject;
 import com.headbangers.mi.R;
 import com.headbangers.mi.model.DownloadObject;
 import com.headbangers.mi.service.HttpService;
@@ -31,7 +30,7 @@ public class DownloadManagerActivity extends GuiceListActivity {
             @Override
             public void run() {
 
-                http.downloadFileAndWriteItOnDevice(url, name, null);
+                http.downloadFileAndWriteItOnDevice(url, name, "Musiques-Incongrues/Musique");
             }
 
         }).start();

@@ -4,8 +4,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Map;
 
-import android.graphics.Bitmap;
-
 public class MILinkData {
 
     private String contributionDate;
@@ -78,15 +76,4 @@ public class MILinkData {
     public String getTitle() {
         return title;
     }
-    
-    // DUMMY :(
-    private Bitmap cachedBitmap = null;
-    public void setCachedBitmap(Bitmap cachedBitmap) {
-        this.cachedBitmap = cachedBitmap;
-    }
-    
-    public Bitmap getCachedBitmap() {
-        return cachedBitmap;
-    }
-
 }

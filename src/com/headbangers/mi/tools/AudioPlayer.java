@@ -207,5 +207,9 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener,
 
         return false;
     }
+    
+    public Integer getCurrentSongNumber (){
+        return new Integer (currentSongNumber!=null?currentSongNumber:-1);
+    }
 
 }
