@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <!-- <item android:enabled="true" android:title="Au hasard" -->
-  <!-- android:id="@+id/menuDiaporamaHasard" android:icon="@drawable/shuffle"></item> -->
-<!---->
-  <!-- <item android:enabled="true" android:title="Les suivantes !!" -->
-  <!-- android:id="@+id/menuDiaporamaNext10" android:icon="@drawable/next10"></item> -->
+   <item android:enabled="true" android:title="Au hasard" 
+   android:id="@+id/menuDiaporamaHasard" android:icon="@drawable/shuffle"></item> 
+
+   <item android:enabled="true" android:title="Les suivantes !!" 
+   android:id="@+id/menuDiaporamaNext10" android:icon="@drawable/next10"></item> 
 
   <item android:enabled="true" android:title="Paramètres"
     android:id="@+id/menuDiaporamaPreferences" android:icon="@drawable/params"></item>

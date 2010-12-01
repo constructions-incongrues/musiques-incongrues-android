@@ -5,12 +5,18 @@ import roboguice.inject.InjectView;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Matrix;
+import android.graphics.PointF;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.FloatMath;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -30,7 +36,12 @@ import com.headbangers.mi.service.DataAccessService;
 import com.headbangers.mi.service.HttpService;
 import com.headbangers.mi.tools.DrawableManager;
 
-public class DiaporamaActivity extends GuiceActivity {
+public class DiaporamaActivity extends GuiceActivity implements OnTouchListener {
+
+    public static int currentOffset = 0;
+    
+    @SuppressWarnings("unused")
+    private static final String TAG = "DiaporamaActivity";
 
     @InjectView(R.id.diaporamaGallery)
     private Gallery diapoGallery;
@@ -40,9 +51,10 @@ public class DiaporamaActivity extends GuiceActivity {
 
     @InjectView(R.id.diaporamaBarZoomIn)
     private ImageButton zoomIn;
-
     @InjectView(R.id.diaporamaBarZoomOut)
     private ImageButton zoomOut;
+    @InjectView(R.id.diaporamaRefresh)
+    private ImageButton refresh;
 
     protected SharedPreferences prefs;
 
@@ -73,7 +85,8 @@ public class DiaporamaActivity extends GuiceActivity {
                             int position, long id) {
                         ImageView galleryImage = (ImageView) v;
                         zoomImage.setImageDrawable(galleryImage.getDrawable());
-                        zoomImage.setScaleType(ScaleType.FIT_CENTER);
+                        zoomImage.setScaleType(ScaleType.MATRIX);
+                        matrix.set(zoomImage.getImageMatrix());
                     }
 
                 });
@@ -82,7 +95,11 @@ public class DiaporamaActivity extends GuiceActivity {
 
             @Override
             public void onClick(View v) {
-                zoomImage.getImageMatrix().postScale(1.25f, 1.25f, 0, 0);
+                Drawable image = zoomImage.getDrawable();
+                zoomImage.getImageMatrix().postScale(1.25f, 1.25f,
+                        image.getMinimumWidth() / 2,
+                        image.getMinimumHeight() / 2);
+                matrix.set(zoomImage.getImageMatrix());
                 zoomImage.invalidate();
             }
         });
@@ -91,11 +108,25 @@ public class DiaporamaActivity extends GuiceActivity {
 
             @Override
             public void onClick(View v) {
-                zoomImage.getImageMatrix().postScale(1/1.25f, 1/1.25f, 0, 0);
+                Drawable image = zoomImage.getDrawable();
+                zoomImage.getImageMatrix().postScale(1 / 1.25f, 1 / 1.25f,
+                        image.getMinimumWidth() / 2,
+                        image.getMinimumHeight() / 2);
+                matrix.set(zoomImage.getImageMatrix());
                 zoomImage.invalidate();
 
             }
         });
+        
+        refresh.setOnClickListener (new View.OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                loadAsyncList(LoadDiaporamaAsyncTask.SEARCH_TYPE_FIRST, 0);
+            }
+        });
+
+        zoomImage.setOnTouchListener(this);
     }
 
     @Override
@@ -112,6 +143,16 @@ public class DiaporamaActivity extends GuiceActivity {
             Intent intent = new Intent(getBaseContext(),
                     DiaporamaPreferencesActivity.class);
             startActivity(intent);
+            return true;
+            
+        case R.id.menuDiaporamaHasard:
+            loadAsyncList(LoadDiaporamaAsyncTask.SEARCH_TYPE_RANDOM, 0);
+            return true;
+            
+        case R.id.menuDiaporamaNext10:
+            int nb = prefs.getInt("diaporamaPreferences.nbImages", 10);
+            loadAsyncList(LoadDiaporamaAsyncTask.SEARCH_TYPE_PAGE, currentOffset+nb);
+            currentOffset += nb;
             return true;
         }
         return false;
@@ -160,7 +201,7 @@ public class DiaporamaActivity extends GuiceActivity {
 
     public void loadAsyncList(int type, int offset) {
         new LoadDiaporamaAsyncTask(this, data, drawableManager).execute(type,
-                prefs.getInt("radioPreferences.nbImages", 10), offset);
+                prefs.getInt("diaporamaPreferences.nbImages", 10), offset);
     }
 
     public void fillGallery(DataPage page) {
@@ -173,4 +214,77 @@ public class DiaporamaActivity extends GuiceActivity {
                     1000).show();
         }
     }
+
+    // These matrices will be used to move and zoom image
+    private Matrix matrix = new Matrix();
+    private Matrix savedMatrix = new Matrix();
+
+    // We can be in one of these 3 states
+    private static final int NONE = 0;
+    private static final int DRAG = 1;
+    private static final int ZOOM = 2;
+    private int mode = NONE;
+
+    // Remember some things for zooming
+    private PointF start = new PointF();
+    private PointF mid = new PointF();
+    private float oldDist = 1f;
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        ImageView image = (ImageView) v;
+
+        switch (event.getAction() & MotionEvent.ACTION_MASK) {
+        case MotionEvent.ACTION_DOWN:
+            savedMatrix.set(matrix);
+            start.set(event.getX(), event.getY());
+            mode = DRAG;
+            break;
+        case MotionEvent.ACTION_POINTER_DOWN:
+            oldDist = spacing(event);
+            if (oldDist > 10f) {
+                savedMatrix.set(matrix);
+                midPoint(mid, event);
+                mode = ZOOM;
+            }
+            break;
+        case MotionEvent.ACTION_UP:
+        case MotionEvent.ACTION_POINTER_UP:
+            mode = NONE;
+            break;
+        case MotionEvent.ACTION_MOVE:
+            if (mode == DRAG) {
+                matrix.set(savedMatrix);
+                matrix.postTranslate(event.getX() - start.x, event.getY()
+                        - start.y);
+            } else if (mode == ZOOM) {
+                float newDist = spacing(event);
+                if (newDist > 10f) {
+                   matrix.set(savedMatrix);
+                   float scale = newDist / oldDist;
+                   matrix.postScale(scale, scale, mid.x, mid.y);
+                }
+             }
+            break;
+
+        }
+
+        image.setImageMatrix(matrix);
+        return true;
+    }
+
+    /** Determine the space between the first two fingers */
+    private float spacing(MotionEvent event) {
+        float x = event.getX(0) - event.getX(1);
+        float y = event.getY(0) - event.getY(1);
+        return FloatMath.sqrt(x * x + y * y);
+    }
+
+    /** Calculate the mid point of the first two fingers */
+    private void midPoint(PointF point, MotionEvent event) {
+        float x = event.getX(0) + event.getX(1);
+        float y = event.getY(0) + event.getY(1);
+        point.set(x / 2, y / 2);
+    }
+
 }

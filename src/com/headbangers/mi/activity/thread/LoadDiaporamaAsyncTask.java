@@ -37,7 +37,20 @@ public class LoadDiaporamaAsyncTask extends AsyncTask<Integer, Void, DataPage>{
     
     @Override
     protected DataPage doInBackground(Integer... params) {
-        DataPage page = data.retrieveLastNLinks(Segment.IMAGES, params[1]);
+        DataPage page = null;
+        
+        switch (params[0]) {
+        case SEARCH_TYPE_FIRST:
+            page = data.retrieveLastNLinks(Segment.IMAGES, params[1]);
+            break;
+        case SEARCH_TYPE_RANDOM:
+            page = data.retrieveShuffledNLinks(Segment.IMAGES, params[1]);
+            break;
+        case SEARCH_TYPE_PAGE:
+            page = data.retrieveRangeLinks(Segment.IMAGES, params[2], params[1]);
+            break;
+        }
+        
         if (page !=null){
             drawableManager.fetchDrawable(page.findInList(0).getUrl());
             if (page.size()>=2){

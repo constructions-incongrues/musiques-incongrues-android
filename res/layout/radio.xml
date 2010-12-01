@@ -70,7 +70,7 @@
 
       <ImageButton android:id="@+id/barRefresh"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:src="@color/stream_refresh" android:paddingLeft="5dip"
+        android:src="@color/refresh" android:paddingLeft="5dip"
         android:background="@color/android:transparent" />
 
     </LinearLayout>

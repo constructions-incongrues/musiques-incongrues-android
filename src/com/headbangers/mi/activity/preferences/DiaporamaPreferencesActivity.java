@@ -1,16 +1,18 @@
 package com.headbangers.mi.activity.preferences;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceManager;
 
 import com.headbangers.mi.R;
 
-import roboguice.activity.GuicePreferenceActivity;
+public class DiaporamaPreferencesActivity extends GenericPreferences {
 
-public class DiaporamaPreferencesActivity extends GuicePreferenceActivity {
-
-    private SharedPreferences preferences;
+    @Override
+    protected String giveMePreferenceNumberKey() {
+        return "diaporamaPreferences.nbImages";
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +22,18 @@ public class DiaporamaPreferencesActivity extends GuicePreferenceActivity {
                 .getApplicationContext());
 
         addPreferencesFromResource(R.xml.diaporama_preferences);
+
+        Preference customPref = (Preference) findPreference(giveMePreferenceNumberKey());
+        customPref
+                .setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+                    public boolean onPreferenceClick(Preference preference) {
+
+                        showDialog(DIALOG_SELECT_NUMBER);
+                        return true;
+                    }
+
+                });
     }
 
 }

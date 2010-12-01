@@ -2,8 +2,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
   <PreferenceCategory android:title="Préférences Diaporama">
     <Preference android:key="@string/diaporamaPreferences.nbImages"
-      android:summary="Le nombre d'images qui seront chargées dans l'interface." android:title="Combien d'images à charger ?"
-      android:defaultValue="10" />
+      android:summary="Le nombre d'images qui seront chargées dans l'interface."
+      android:title="Combien d'images à charger ?" android:defaultValue="10" />
+
+    <EditTextPreference android:key="@string/diaporamaPreferences.downloadPath"
+      android:summary="Répertoire pour l'enregistrement des images"
+      android:title="Répertoire sauvegarde" android:defaultValue="Image/" />
 
   </PreferenceCategory>
 </PreferenceScreen>

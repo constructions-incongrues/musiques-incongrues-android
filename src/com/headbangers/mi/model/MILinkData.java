@@ -38,7 +38,12 @@ public class MILinkData {
             this.decodedUrl = this.url.replaceAll("%20", " ");
         }
 
-        this.title = this.decodedUrl.substring(this.url.lastIndexOf("/") + 1);
+        try{
+            this.title = this.decodedUrl.substring(this.url.lastIndexOf("/") + 1);
+        } catch (StringIndexOutOfBoundsException e){
+            // erreur lors du substring ? 
+            this.title = this.decodedUrl;
+        }
     }
 
     public String getContributionDate() {

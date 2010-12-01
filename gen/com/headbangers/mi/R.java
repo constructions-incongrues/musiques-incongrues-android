@@ -19,10 +19,10 @@ public final class R {
         public static final int listview=0x7f050004;
         public static final int mi_pink=0x7f050000;
         public static final int mi_yellow=0x7f050003;
-        public static final int stream_next=0x7f050005;
-        public static final int stream_play=0x7f050006;
-        public static final int stream_previous=0x7f050007;
-        public static final int stream_refresh=0x7f050008;
+        public static final int refresh=0x7f050005;
+        public static final int stream_next=0x7f050006;
+        public static final int stream_play=0x7f050007;
+        public static final int stream_previous=0x7f050008;
         public static final int stream_stop=0x7f050009;
         public static final int zoomin=0x7f05000a;
         public static final int zoomout=0x7f05000b;
@@ -78,11 +78,11 @@ public final class R {
     }
     public static final class id {
         public static final int actionBar=0x7f0a0004;
-        public static final int barNext=0x7f0a0017;
-        public static final int barPlay=0x7f0a0016;
-        public static final int barPrevious=0x7f0a0014;
-        public static final int barRefresh=0x7f0a0018;
-        public static final int barStop=0x7f0a0015;
+        public static final int barNext=0x7f0a0018;
+        public static final int barPlay=0x7f0a0017;
+        public static final int barPrevious=0x7f0a0015;
+        public static final int barRefresh=0x7f0a0019;
+        public static final int barStop=0x7f0a0016;
         public static final int dialogNumberInput=0x7f0a0001;
         public static final int dialogNumberMoins=0x7f0a0002;
         public static final int dialogNumberOk=0x7f0a0003;
@@ -90,23 +90,26 @@ public final class R {
         public static final int diaporamaBarZoomIn=0x7f0a000b;
         public static final int diaporamaBarZoomOut=0x7f0a000a;
         public static final int diaporamaBufferText=0x7f0a0007;
-        public static final int diaporamaGallery=0x7f0a0008;
-        public static final int diaporamaZoom=0x7f0a0009;
-        public static final int downloadBufferText=0x7f0a000c;
-        public static final int menuDiaporamaPreferences=0x7f0a001a;
-        public static final int menuDisclaimer=0x7f0a000f;
-        public static final int menuIcon=0x7f0a000d;
-        public static final int menuLabel=0x7f0a000e;
-        public static final int menuRadioHasard=0x7f0a001d;
-        public static final int menuRadioNext10=0x7f0a001e;
-        public static final int menuRadioPreferences=0x7f0a001f;
-        public static final int menuSongDownload=0x7f0a001b;
-        public static final int menuSongRingtone=0x7f0a001c;
-        public static final int radioBufferText=0x7f0a0013;
-        public static final int songContributor=0x7f0a0012;
-        public static final int songIcon=0x7f0a0010;
-        public static final int songTitle=0x7f0a0011;
-        public static final int streamBar=0x7f0a0019;
+        public static final int diaporamaGallery=0x7f0a0009;
+        public static final int diaporamaRefresh=0x7f0a000c;
+        public static final int diaporamaZoom=0x7f0a0008;
+        public static final int downloadBufferText=0x7f0a000d;
+        public static final int menuDiaporamaHasard=0x7f0a001b;
+        public static final int menuDiaporamaNext10=0x7f0a001c;
+        public static final int menuDiaporamaPreferences=0x7f0a001d;
+        public static final int menuDisclaimer=0x7f0a0010;
+        public static final int menuIcon=0x7f0a000e;
+        public static final int menuLabel=0x7f0a000f;
+        public static final int menuRadioHasard=0x7f0a0020;
+        public static final int menuRadioNext10=0x7f0a0021;
+        public static final int menuRadioPreferences=0x7f0a0022;
+        public static final int menuSongDownload=0x7f0a001e;
+        public static final int menuSongRingtone=0x7f0a001f;
+        public static final int radioBufferText=0x7f0a0014;
+        public static final int songContributor=0x7f0a0013;
+        public static final int songIcon=0x7f0a0011;
+        public static final int songTitle=0x7f0a0012;
+        public static final int streamBar=0x7f0a001a;
         public static final int title=0x7f0a0005;
         public static final int version=0x7f0a0006;
     }
@@ -125,15 +128,16 @@ public final class R {
         public static final int radio_menu=0x7f090002;
     }
     public static final class string {
-        public static final int app_name=0x7f060005;
-        public static final int app_title=0x7f060006;
+        public static final int app_name=0x7f060006;
+        public static final int app_title=0x7f060007;
+        public static final int diaporamaPreferences_downloadPath=0x7f060005;
         public static final int diaporamaPreferences_nbImages=0x7f060004;
-        public static final int diaporama_buffer=0x7f060009;
-        public static final int download_buffer=0x7f06000a;
+        public static final int diaporama_buffer=0x7f06000a;
+        public static final int download_buffer=0x7f06000b;
         public static final int radioPreferences_downloadPath=0x7f060003;
         public static final int radioPreferences_nbSongs=0x7f060002;
-        public static final int radio_buffer=0x7f060008;
-        public static final int version=0x7f060007;
+        public static final int radio_buffer=0x7f060009;
+        public static final int version=0x7f060008;
         public static final int webservice_host=0x7f060000;
         public static final int webservice_service_links=0x7f060001;
     }

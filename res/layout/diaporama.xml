@@ -30,15 +30,16 @@
     android:text="@string/diaporama_buffer" android:paddingLeft="5dip"
     android:background="@color/light_mi_blue" android:textColor="#000000" />
 
-  <Gallery android:id="@+id/diaporamaGallery"
-    android:layout_width="fill_parent" android:layout_height="100px"
-    android:background="@color/mi_yellow"
-    android:persistentDrawingCache="all" />
 
   <ImageView android:id="@+id/diaporamaZoom"
     android:layout_width="fill_parent" android:layout_height="wrap_content"
     android:src="@drawable/zoom" android:scaleType="centerInside"
     android:layout_weight="4" />
+
+  <Gallery android:id="@+id/diaporamaGallery"
+    android:layout_width="fill_parent" android:layout_height="100px"
+    android:background="@color/light_mi_blue"
+    android:persistentDrawingCache="all" />
 
   <LinearLayout android:layout_height="wrap_content"
     android:layout_width="fill_parent" android:orientation="horizontal"
@@ -53,6 +54,11 @@
     <ImageButton android:id="@+id/diaporamaBarZoomIn"
       android:layout_width="wrap_content" android:layout_height="wrap_content"
       android:src="@color/zoomin" android:paddingLeft="5dip"
+      android:background="@color/android:transparent" />
+
+    <ImageButton android:id="@+id/diaporamaRefresh"
+      android:layout_width="wrap_content" android:layout_height="wrap_content"
+      android:src="@color/refresh" android:paddingLeft="5dip"
       android:background="@color/android:transparent" />
 
   </LinearLayout>
