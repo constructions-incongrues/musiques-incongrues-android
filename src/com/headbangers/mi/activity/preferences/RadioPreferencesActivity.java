@@ -6,12 +6,13 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceManager;
 
 import com.headbangers.mi.R;
+import com.headbangers.mi.constant.PreferencesKeys;
 
 public class RadioPreferencesActivity extends GenericPreferences {
 
     @Override
     protected String giveMePreferenceNumberKey() {
-        return "radioPreferences.nbSongs";
+        return PreferencesKeys.radioNumber;
     }
     
     @Override

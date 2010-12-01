@@ -18,6 +18,8 @@
       </shape>
     </clip>
   </item>
+  
+  
 
   <!-- <item android:id="@android:id/progress"> -->
   <!-- <clip android:drawable="@drawable/stop_pressed" /> -->

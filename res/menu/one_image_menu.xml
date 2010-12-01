@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <item android:enabled="true" android:title="Télécharger ce morceau"
-    android:id="@+id/menuSongDownload" android:icon="@drawable/save"></item>
+  <item android:enabled="true" android:title="Télécharger cette image"
+    android:id="@+id/menuImageDownload" android:icon="@drawable/save"></item>
 
 <!--  <item android:enabled="true" android:title="Je le veux en sonnerie!"-->
 <!--    android:id="@+id/menuSongRingtone" android:icon="@drawable/save"></item>-->

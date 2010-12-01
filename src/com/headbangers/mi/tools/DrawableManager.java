@@ -10,13 +10,13 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import com.headbangers.mi.R;
+
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.widget.ImageView;
-
-import com.headbangers.mi.R;
 
 public class DrawableManager {
     private final Map<String, Drawable> drawableMap;
@@ -54,7 +54,11 @@ public class DrawableManager {
         final Handler handler = new Handler() {
             @Override
             public void handleMessage(Message message) {
-                imageView.setImageDrawable((Drawable) message.obj);
+                if (message.obj != null) {
+                    imageView.setImageDrawable((Drawable) message.obj);
+                } else {
+                    imageView.setImageResource(R.drawable.pin03);
+                }
             }
         };
 

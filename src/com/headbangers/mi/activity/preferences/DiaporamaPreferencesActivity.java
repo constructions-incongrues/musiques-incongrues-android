@@ -6,12 +6,13 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceManager;
 
 import com.headbangers.mi.R;
+import com.headbangers.mi.constant.PreferencesKeys;
 
 public class DiaporamaPreferencesActivity extends GenericPreferences {
 
     @Override
     protected String giveMePreferenceNumberKey() {
-        return "diaporamaPreferences.nbImages";
+        return PreferencesKeys.diaporamaNumber;
     }
 
     @Override

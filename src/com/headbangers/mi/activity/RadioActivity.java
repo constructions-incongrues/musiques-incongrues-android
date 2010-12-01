@@ -27,8 +27,11 @@ import android.widget.Toast;
 import com.google.inject.Inject;
 import com.headbangers.mi.R;
 import com.headbangers.mi.activity.preferences.RadioPreferencesActivity;
+import com.headbangers.mi.activity.thread.DownloadFileAsyncTask;
 import com.headbangers.mi.activity.thread.LoadRadioTracksAsyncTask;
+import com.headbangers.mi.constant.PreferencesKeys;
 import com.headbangers.mi.model.DataPage;
+import com.headbangers.mi.model.DownloadObject;
 import com.headbangers.mi.model.MILinkData;
 import com.headbangers.mi.service.DataAccessService;
 import com.headbangers.mi.tools.AudioPlayer;
@@ -185,10 +188,9 @@ public class RadioActivity extends GuiceListActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
             ContextMenuInfo menuInfo) {
-        TextView title = (TextView) v.findViewById(R.id.songTitle);
-        menu.setHeaderTitle(title.getText());
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.one_song_menu, menu);
+        menu.setHeaderTitle("Que faire ?");
     }
 
     @Override
@@ -203,7 +205,8 @@ public class RadioActivity extends GuiceListActivity {
             startActivity(intent);
             return true;
         case R.id.menuRadioNext10:
-            int nb = prefs.getInt("radioPreferences.nbSongs", 10);
+            int nb = prefs.getInt(PreferencesKeys.radioNumber,
+                    PreferencesKeys.radioNumberDefault);
             loadAsyncList(LoadRadioTracksAsyncTask.SEARCH_TYPE_PAGE,
                     AudioPlayer.currentOffset + nb);
             AudioPlayer.currentOffset += nb;
@@ -216,14 +219,13 @@ public class RadioActivity extends GuiceListActivity {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.menuSongDownload:
-            Toast.makeText(this, "Le téléchargement est en cours ...", 1000)
-                    .show();
             final AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item
                     .getMenuInfo();
-
-            final MILinkData data = page.findInList(menuInfo.position);
-            DownloadManagerActivity.addDownload(data.getTitle(), data.getUrl());
-            startActivity(new Intent(this, DownloadManagerActivity.class));
+            MILinkData data = page.findInList(menuInfo.position);
+            new DownloadFileAsyncTask(this, new DownloadObject(data.getTitle(),
+                    data.getUrl()), prefs.getString(
+                    PreferencesKeys.radioDlPath,
+                    PreferencesKeys.radioDlPathDefault)).execute();
             return true;
         }
         return false;
@@ -246,7 +248,8 @@ public class RadioActivity extends GuiceListActivity {
     }
 
     public void loadAsyncList(int type, int offset) {
-        new LoadRadioTracksAsyncTask(this, data).execute(type,
-                prefs.getInt("radioPreferences.nbSongs", 10), offset);
+        new LoadRadioTracksAsyncTask(this, data).execute(type, prefs
+                .getInt(PreferencesKeys.radioNumber,
+                        PreferencesKeys.radioNumberDefault), offset);
     }
 }

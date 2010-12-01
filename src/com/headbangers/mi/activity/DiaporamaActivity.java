@@ -1,5 +1,8 @@
 package com.headbangers.mi.activity;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import roboguice.activity.GuiceActivity;
 import roboguice.inject.InjectView;
 import android.app.Activity;
@@ -8,9 +11,13 @@ import android.content.SharedPreferences;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.FloatMath;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,14 +30,18 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ImageView.ScaleType;
 import android.widget.Toast;
 
 import com.google.inject.Inject;
 import com.headbangers.mi.R;
 import com.headbangers.mi.activity.preferences.DiaporamaPreferencesActivity;
+import com.headbangers.mi.activity.thread.DownloadFileAsyncTask;
 import com.headbangers.mi.activity.thread.LoadDiaporamaAsyncTask;
+import com.headbangers.mi.constant.PreferencesKeys;
 import com.headbangers.mi.model.DataPage;
+import com.headbangers.mi.model.DownloadObject;
 import com.headbangers.mi.model.MILinkData;
 import com.headbangers.mi.service.DataAccessService;
 import com.headbangers.mi.service.HttpService;
@@ -39,7 +50,8 @@ import com.headbangers.mi.tools.DrawableManager;
 public class DiaporamaActivity extends GuiceActivity implements OnTouchListener {
 
     public static int currentOffset = 0;
-    
+    public int currentSelected = 0;
+
     @SuppressWarnings("unused")
     private static final String TAG = "DiaporamaActivity";
 
@@ -87,6 +99,7 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
                         zoomImage.setImageDrawable(galleryImage.getDrawable());
                         zoomImage.setScaleType(ScaleType.MATRIX);
                         matrix.set(zoomImage.getImageMatrix());
+                        currentSelected = position;
                     }
 
                 });
@@ -117,9 +130,9 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
 
             }
         });
-        
-        refresh.setOnClickListener (new View.OnClickListener() {
-            
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 loadAsyncList(LoadDiaporamaAsyncTask.SEARCH_TYPE_FIRST, 0);
@@ -127,6 +140,31 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
         });
 
         zoomImage.setOnTouchListener(this);
+        registerForContextMenu(diapoGallery);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+            ContextMenuInfo menuInfo) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.one_image_menu, menu);
+        menu.setHeaderTitle("Que faire ?");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.menuImageDownload:
+            final AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item
+                    .getMenuInfo();
+            MILinkData data = page.findInList(menuInfo.position);
+            new DownloadFileAsyncTask(this, new DownloadObject(data.getTitle(),
+                    data.getUrl()), prefs.getString(
+                    PreferencesKeys.diaporamaDlPath,
+                    PreferencesKeys.diaporamaDlPathDefault)).execute();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -144,14 +182,16 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
                     DiaporamaPreferencesActivity.class);
             startActivity(intent);
             return true;
-            
+
         case R.id.menuDiaporamaHasard:
             loadAsyncList(LoadDiaporamaAsyncTask.SEARCH_TYPE_RANDOM, 0);
             return true;
-            
+
         case R.id.menuDiaporamaNext10:
-            int nb = prefs.getInt("diaporamaPreferences.nbImages", 10);
-            loadAsyncList(LoadDiaporamaAsyncTask.SEARCH_TYPE_PAGE, currentOffset+nb);
+            int nb = prefs.getInt(PreferencesKeys.diaporamaNumber,
+                    PreferencesKeys.diaporamaNumberDefault);
+            loadAsyncList(LoadDiaporamaAsyncTask.SEARCH_TYPE_PAGE,
+                    currentOffset + nb);
             currentOffset += nb;
             return true;
         }
@@ -201,7 +241,8 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
 
     public void loadAsyncList(int type, int offset) {
         new LoadDiaporamaAsyncTask(this, data, drawableManager).execute(type,
-                prefs.getInt("diaporamaPreferences.nbImages", 10), offset);
+                prefs.getInt(PreferencesKeys.diaporamaNumber,
+                        PreferencesKeys.diaporamaNumberDefault), offset);
     }
 
     public void fillGallery(DataPage page) {
@@ -212,6 +253,23 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
         } else {
             Toast.makeText(this, "Problème lors du chargement, réessayez !",
                     1000).show();
+        }
+    }
+
+    // gérer le touch sans tout casser et conserver la compatibilité Android 1.6
+    private static Method _getX = null;
+    private static Method _getY = null;
+    static {
+        int sdk = new Integer(VERSION.SDK).intValue();
+        if (sdk > 4) {
+            try {
+                _getX = MotionEvent.class.getMethod("getX",
+                        new Class[] { Integer.TYPE });
+                _getY = MotionEvent.class.getMethod("getY",
+                        new Class[] { Integer.TYPE });
+            } catch (Throwable ex) {
+                // on est sur un android trop vieux, pas de zoom multitouch
+            }
         }
     }
 
@@ -260,11 +318,11 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
             } else if (mode == ZOOM) {
                 float newDist = spacing(event);
                 if (newDist > 10f) {
-                   matrix.set(savedMatrix);
-                   float scale = newDist / oldDist;
-                   matrix.postScale(scale, scale, mid.x, mid.y);
+                    matrix.set(savedMatrix);
+                    float scale = newDist / oldDist;
+                    matrix.postScale(scale, scale, mid.x, mid.y);
                 }
-             }
+            }
             break;
 
         }
@@ -275,16 +333,46 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
 
     /** Determine the space between the first two fingers */
     private float spacing(MotionEvent event) {
-        float x = event.getX(0) - event.getX(1);
-        float y = event.getY(0) - event.getY(1);
-        return FloatMath.sqrt(x * x + y * y);
+        if (_getX != null && _getY != null) {
+            // float x = event.getX(0) - event.getX(1);
+            // float y = event.getY(0) - event.getY(1);
+            try {
+                float x = ((Float) _getX.invoke(event, new Integer(0)))
+                        - ((Float) _getX.invoke(event, new Integer(1)));
+                float y = ((Float) _getY.invoke(event, new Integer(0)))
+                        - ((Float) _getY.invoke(event, new Integer(1)));
+                return FloatMath.sqrt(x * x + y * y);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
     }
 
     /** Calculate the mid point of the first two fingers */
     private void midPoint(PointF point, MotionEvent event) {
-        float x = event.getX(0) + event.getX(1);
-        float y = event.getY(0) + event.getY(1);
-        point.set(x / 2, y / 2);
+        if (_getX != null && _getY != null) {
+            // float x = event.getX(0) + event.getX(1);
+            // float y = event.getY(0) + event.getY(1);
+            try {
+                float x = ((Float) _getX.invoke(event, new Integer(0)))
+                        - ((Float) _getX.invoke(event, new Integer(1)));
+                float y = ((Float) _getY.invoke(event, new Integer(0)))
+                        - ((Float) _getY.invoke(event, new Integer(1)));
+                point.set(x / 2, y / 2);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
 }

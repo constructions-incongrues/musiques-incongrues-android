@@ -78,11 +78,11 @@ public final class R {
     }
     public static final class id {
         public static final int actionBar=0x7f0a0004;
-        public static final int barNext=0x7f0a0018;
-        public static final int barPlay=0x7f0a0017;
-        public static final int barPrevious=0x7f0a0015;
-        public static final int barRefresh=0x7f0a0019;
-        public static final int barStop=0x7f0a0016;
+        public static final int barNext=0x7f0a001c;
+        public static final int barPlay=0x7f0a001b;
+        public static final int barPrevious=0x7f0a0019;
+        public static final int barRefresh=0x7f0a001d;
+        public static final int barStop=0x7f0a001a;
         public static final int dialogNumberInput=0x7f0a0001;
         public static final int dialogNumberMoins=0x7f0a0002;
         public static final int dialogNumberOk=0x7f0a0003;
@@ -94,22 +94,26 @@ public final class R {
         public static final int diaporamaRefresh=0x7f0a000c;
         public static final int diaporamaZoom=0x7f0a0008;
         public static final int downloadBufferText=0x7f0a000d;
-        public static final int menuDiaporamaHasard=0x7f0a001b;
-        public static final int menuDiaporamaNext10=0x7f0a001c;
-        public static final int menuDiaporamaPreferences=0x7f0a001d;
-        public static final int menuDisclaimer=0x7f0a0010;
-        public static final int menuIcon=0x7f0a000e;
-        public static final int menuLabel=0x7f0a000f;
-        public static final int menuRadioHasard=0x7f0a0020;
-        public static final int menuRadioNext10=0x7f0a0021;
-        public static final int menuRadioPreferences=0x7f0a0022;
-        public static final int menuSongDownload=0x7f0a001e;
-        public static final int menuSongRingtone=0x7f0a001f;
-        public static final int radioBufferText=0x7f0a0014;
-        public static final int songContributor=0x7f0a0013;
-        public static final int songIcon=0x7f0a0011;
-        public static final int songTitle=0x7f0a0012;
-        public static final int streamBar=0x7f0a001a;
+        public static final int menuDiaporamaHasard=0x7f0a001f;
+        public static final int menuDiaporamaNext10=0x7f0a0020;
+        public static final int menuDiaporamaPreferences=0x7f0a0021;
+        public static final int menuDisclaimer=0x7f0a0014;
+        public static final int menuIcon=0x7f0a0012;
+        public static final int menuImageDownload=0x7f0a0022;
+        public static final int menuLabel=0x7f0a0013;
+        public static final int menuRadioHasard=0x7f0a0024;
+        public static final int menuRadioNext10=0x7f0a0025;
+        public static final int menuRadioPreferences=0x7f0a0026;
+        public static final int menuSongDownload=0x7f0a0023;
+        public static final int objectDlBar=0x7f0a0011;
+        public static final int objectIcon=0x7f0a000e;
+        public static final int objectName=0x7f0a000f;
+        public static final int objectStatus=0x7f0a0010;
+        public static final int radioBufferText=0x7f0a0018;
+        public static final int songContributor=0x7f0a0017;
+        public static final int songIcon=0x7f0a0015;
+        public static final int songTitle=0x7f0a0016;
+        public static final int streamBar=0x7f0a001e;
         public static final int title=0x7f0a0005;
         public static final int version=0x7f0a0006;
     }
@@ -117,15 +121,17 @@ public final class R {
         public static final int dialog_number=0x7f030000;
         public static final int diaporama=0x7f030001;
         public static final int download_manager=0x7f030002;
-        public static final int main=0x7f030003;
-        public static final int main_menu_item=0x7f030004;
-        public static final int one_song=0x7f030005;
-        public static final int radio=0x7f030006;
+        public static final int download_notification=0x7f030003;
+        public static final int main=0x7f030004;
+        public static final int main_menu_item=0x7f030005;
+        public static final int one_song=0x7f030006;
+        public static final int radio=0x7f030007;
     }
     public static final class menu {
         public static final int diaporama_menu=0x7f090000;
-        public static final int one_song_menu=0x7f090001;
-        public static final int radio_menu=0x7f090002;
+        public static final int one_image_menu=0x7f090001;
+        public static final int one_song_menu=0x7f090002;
+        public static final int radio_menu=0x7f090003;
     }
     public static final class string {
         public static final int app_name=0x7f060006;

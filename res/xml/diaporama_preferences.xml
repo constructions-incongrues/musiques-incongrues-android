@@ -7,7 +7,7 @@
 
     <EditTextPreference android:key="@string/diaporamaPreferences.downloadPath"
       android:summary="Répertoire pour l'enregistrement des images"
-      android:title="Répertoire sauvegarde" android:defaultValue="Image/" />
+      android:title="Répertoire sauvegarde" android:defaultValue="Musiques-Incongrues/Image/" />
 
   </PreferenceCategory>
 </PreferenceScreen>
