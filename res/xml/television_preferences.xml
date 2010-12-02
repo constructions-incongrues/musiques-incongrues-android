@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <PreferenceCategory android:title="Préférences Diaporama">
+    <Preference android:key="@string/televisionPreferences.nbVideos"
+      android:summary="Le nombre de vidéos qui seront chargées dans l'interface."
+      android:title="Combien de vidéos à charger ?" android:defaultValue="10" />
+  </PreferenceCategory>
+</PreferenceScreen>

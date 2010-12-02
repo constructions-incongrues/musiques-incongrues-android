@@ -4,7 +4,10 @@
   <item android:enabled="true" android:title="Télécharger cette image"
     android:id="@+id/menuImageDownload" android:icon="@drawable/save"></item>
 
-<!--  <item android:enabled="true" android:title="Je le veux en sonnerie!"-->
-<!--    android:id="@+id/menuSongRingtone" android:icon="@drawable/save"></item>-->
+  <!-- <item android:enabled="true" android:title="Je le veux en sonnerie!" -->
+  <!-- android:id="@+id/menuSongRingtone" android:icon="@drawable/save"></item> -->
+
+   <item android:enabled="true" android:title="Partager cette image" 
+   android:id="@+id/menuImageShare" android:icon="@drawable/save"></item> 
 
 </menu>

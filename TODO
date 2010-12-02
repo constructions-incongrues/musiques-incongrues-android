@@ -1,0 +1,28 @@
+### PRIORITAIRE
+- DONE ___ gérer le resume sur la barre de progress stream (RadioActivity) - A TESTER
+- afficher la track en cours de lecture (modifier la liste) (RadioActivity)
+- corriger le download image (DiaporamaActivity)
+
+### NORMAL
+- commencer l'activité Agenda (AgendaActivity)
+- ajouter l'entrée "Partager" dans les menus contextuels (Radio, Diapo, Vidéos)
+
+### REQUETES POUR DATA.MUSIQUES-INCONGRUES.NET
+- gérer un offset pour la selection
+- rss agenda ne répond pas
+- bug des accents
+
+## IDEES
+LIRE UNE VIDEO:
+- startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=nQV-DQPD3rg")));
+- Intent videoClient = new Intent(Intent.ACTION_VIEW);
+  videoClient.setData(Uri.parse("http://m.youtube.com/watch?v="+videoId));
+  videoClient.setClassName("com.google.android.youtube", "com.google.android.youtube.PlayerActivity");
+  startActivityForResult(videoClient, VIDEO_APP);
+ENVOYER UN EMAIL:
+- final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+  emailIntent .setType("plain/text");
+  emailIntent .putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"webmaster@website.com"});
+  emailIntent .putExtra(android.content.Intent.EXTRA_SUBJECT, mySubject);
+  emailIntent .putExtra(android.content.Intent.EXTRA_TEXT, myBodyText);
+  context.startActivity(Intent.createChooser(intent, "Send mail...));

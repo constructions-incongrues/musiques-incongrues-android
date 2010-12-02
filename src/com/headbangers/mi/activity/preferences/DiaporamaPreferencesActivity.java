@@ -3,7 +3,6 @@ package com.headbangers.mi.activity.preferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceManager;
 
 import com.headbangers.mi.R;
 import com.headbangers.mi.constant.PreferencesKeys;
@@ -18,9 +17,6 @@ public class DiaporamaPreferencesActivity extends GenericPreferences {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        preferences = PreferenceManager.getDefaultSharedPreferences(this
-                .getApplicationContext());
 
         addPreferencesFromResource(R.xml.diaporama_preferences);
 

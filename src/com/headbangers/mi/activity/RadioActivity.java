@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,6 +34,7 @@ import com.headbangers.mi.model.DownloadObject;
 import com.headbangers.mi.model.MILinkData;
 import com.headbangers.mi.service.DataAccessService;
 import com.headbangers.mi.tools.AudioPlayer;
+import com.headbangers.mi.tools.ShareByMail;
 
 public class RadioActivity extends GuiceListActivity {
     // private static String TAG = "RadioActivity";
@@ -75,7 +75,7 @@ public class RadioActivity extends GuiceListActivity {
                 .getApplicationContext());
 
         setListAdapter(new RadioAdapter(RadioActivity.this));
-        audioPlayer = new AudioPlayer(this, page, progressBar, buffer);
+        audioPlayer = AudioPlayer.getInstance(this, page, progressBar, buffer);
 
         loadAsyncList(LoadRadioTracksAsyncTask.SEARCH_TYPE_FIRST, 0);
 
@@ -123,12 +123,11 @@ public class RadioActivity extends GuiceListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         if (audioPlayer.getCurrentSongNumber() >= 0) {
-            ((RadioAdapter) getListAdapter())
-                    .undecoratePreviouslyPlayedSong(audioPlayer
-                            .getCurrentSongNumber());
+            ((RadioAdapter) getListAdapter()).undecorate(audioPlayer
+                    .getCurrentSongNumber());
         }
         audioPlayer.playSong(position);
-        ((RadioAdapter) getListAdapter()).decorateCurrentlyPlayedSong(position);
+        ((RadioAdapter) getListAdapter()).decorate(position);
     }
 
     public class RadioAdapter extends ArrayAdapter<MILinkData> {
@@ -140,20 +139,17 @@ public class RadioActivity extends GuiceListActivity {
             this.context = context;
         }
 
-        public void decorateCurrentlyPlayedSong(int position) {
-            View v = getView(position, null, null);
-            if (v != null) {
-                ImageView image = (ImageView) v.findViewById(R.id.songIcon);
-                image.setImageResource(R.drawable.grapp01);// todo change icon
-            }
+        public void decorate(int position) {
+            // View v = getListView().getChildAt(position);
+            // if (v != null) {
+            // ImageView image = (ImageView) v.findViewById(R.id.songIcon);
+            // image.setImageResource(R.drawable.pin01);
+            // getListView().invalidate();
+            // }
         }
 
-        public void undecoratePreviouslyPlayedSong(int position) {
-            View v = getView(position, null, null);
-            if (v != null) {
-                ImageView image = (ImageView) v.findViewById(R.id.songIcon);
-                image.setImageResource(R.drawable.song);
-            }
+        public void undecorate(int position) {
+
         }
 
         @Override
@@ -217,15 +213,21 @@ public class RadioActivity extends GuiceListActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        final AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item
+                .getMenuInfo();
+        MILinkData data = page.findInList(menuInfo.position);
+
         switch (item.getItemId()) {
         case R.id.menuSongDownload:
-            final AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item
-                    .getMenuInfo();
-            MILinkData data = page.findInList(menuInfo.position);
+
             new DownloadFileAsyncTask(this, new DownloadObject(data.getTitle(),
                     data.getUrl()), prefs.getString(
                     PreferencesKeys.radioDlPath,
                     PreferencesKeys.radioDlPathDefault)).execute();
+            return true;
+            
+        case R.id.menuSongShare:
+            new ShareByMail().shareIt(this, data);
             return true;
         }
         return false;

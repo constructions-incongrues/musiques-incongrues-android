@@ -24,9 +24,21 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener,
 
     public static String TAG = "AudioPlayer";
 
+    public static AudioPlayer getInstance(Activity context, DataPage playlist,
+            ProgressBar bar, TextView text) {
+        if (instance == null) {
+            instance = new AudioPlayer(context, playlist, bar, text);
+        } else {
+            instance.init(context, playlist, bar, text);
+        }
+        return instance;
+    }
+
+    private static AudioPlayer instance = null;
+
     public static MediaPlayer androidMediaPlayer = new MediaPlayer();
     public static int currentOffset = 0;
-    
+
     private static Integer currentSongNumber = null;
     private static int forced = 0;
 
@@ -37,13 +49,31 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener,
     private Activity context;
     private TextView associatedTextView;
 
-    public AudioPlayer(Activity context, DataPage playlist, ProgressBar bar,
+    private ProgressBarThread barThread;
+
+    private AudioPlayer(Activity context, DataPage playlist, ProgressBar bar,
+            TextView text) {
+        androidMediaPlayer.setOnPreparedListener(this);
+        androidMediaPlayer.setOnBufferingUpdateListener(this);
+        androidMediaPlayer.setOnCompletionListener(this);
+        androidMediaPlayer.setOnSeekCompleteListener(this);
+        androidMediaPlayer.setOnErrorListener(this);
+
+        init(context, playlist, bar, text);
+    }
+
+    private void init(Activity context, DataPage playlist, ProgressBar bar,
             TextView text) {
         this.playlist = playlist;
         this.associatedProgressBar = bar;
         this.associatedTextView = text;
         this.context = context;
 
+        barThread = new ProgressBarThread(associatedProgressBar,
+                androidMediaPlayer);
+        // en cas de resume on relance le thread, celui-ci mettra (ou pas) la
+        // barre à jour
+        new Thread(barThread).start();
     }
 
     public void setPlaylist(DataPage playlist) {
@@ -90,8 +120,8 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener,
                         "Il y a un problème avec le morceau"
                                 + playlist.findInList(currentSongNumber)
                                         .getTitle()
-                                + ". Impossible de le lire après 5 essais. Sorry ...",
-                        1500).show();
+                                + ". Impossible de le lire après 5 essais. Sorry ... Je vais lire le morceau suivant !",
+                        3000).show();
                 forced = 0;
                 nextSong();
             }
@@ -111,8 +141,7 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener,
                 androidMediaPlayer.pause();
             } else {
                 androidMediaPlayer.start();
-                new Thread(new ProgressBarThread(associatedProgressBar,
-                        androidMediaPlayer)).start();
+                new Thread(barThread).start();
             }
         }
     }
@@ -151,8 +180,7 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener,
         Toast.makeText(context, "Le morceau démarre !", 1000).show();
 
         // lancement du thread d'update de la barre
-        new Thread(new ProgressBarThread(associatedProgressBar,
-                androidMediaPlayer)).start();
+        new Thread(barThread).start();
 
     }
 
@@ -172,12 +200,6 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener,
         try {
             androidMediaPlayer.setDataSource(songUrl);
             androidMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
-            androidMediaPlayer.setOnPreparedListener(this);
-            androidMediaPlayer.setOnBufferingUpdateListener(this);
-            androidMediaPlayer.setOnCompletionListener(this);
-            androidMediaPlayer.setOnSeekCompleteListener(this);
-            androidMediaPlayer.setOnErrorListener(this);
 
             androidMediaPlayer.prepareAsync();
             Toast.makeText(context, "En cours de chargement ...", 1000).show();
@@ -207,9 +229,9 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener,
 
         return false;
     }
-    
-    public Integer getCurrentSongNumber (){
-        return new Integer (currentSongNumber!=null?currentSongNumber:-1);
+
+    public Integer getCurrentSongNumber() {
+        return new Integer(currentSongNumber != null ? currentSongNumber : -1);
     }
 
 }

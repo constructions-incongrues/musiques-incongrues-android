@@ -5,8 +5,7 @@ import com.headbangers.mi.model.DataPage;
 public interface DataAccessService {
 
     /**
-     * Retourne les N derniers liens. TODO ajouter le segment de données afin de
-     * rendre le code plus générique
+     * Retourne les N derniers liens.
      * 
      * @param nb
      * @return
@@ -16,7 +15,7 @@ public interface DataAccessService {
     /**
      * Retourne un intervalle de lien compris entre 'offset' et 'max'.
      * Exemple: retrieveRangeLinks (Segment.MP3, 0, 10); retourne les 10 premiers
-     * mp3s.    retrieveRangeLinks (Segment.MP3, 1, 10); retourne la seconde page.
+     * mp3s.    retrieveRangeLinks (Segment.MP3, 10, 10); retourne la seconde page.
      * @param segment
      * @param offset
      * @param max
@@ -25,8 +24,7 @@ public interface DataAccessService {
     DataPage retrieveRangeLinks (Segment segment, int offset, int max);
 
     /**
-     * Retourne N liens sélectionnés au hasard. TODO ajouter le segment de données afin
-     * de rendre le code plus générique
+     * Retourne N liens sélectionnés au hasard.
      * 
      * @param nb
      * @return

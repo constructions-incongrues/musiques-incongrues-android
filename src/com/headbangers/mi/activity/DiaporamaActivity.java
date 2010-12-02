@@ -12,7 +12,6 @@ import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.FloatMath;
@@ -26,11 +25,11 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ImageView.ScaleType;
 import android.widget.Toast;
 
@@ -46,6 +45,7 @@ import com.headbangers.mi.model.MILinkData;
 import com.headbangers.mi.service.DataAccessService;
 import com.headbangers.mi.service.HttpService;
 import com.headbangers.mi.tools.DrawableManager;
+import com.headbangers.mi.tools.ShareByMail;
 
 public class DiaporamaActivity extends GuiceActivity implements OnTouchListener {
 
@@ -153,15 +153,19 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        final AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item
+                .getMenuInfo();
+        MILinkData data = page.findInList(menuInfo.position);
+
         switch (item.getItemId()) {
         case R.id.menuImageDownload:
-            final AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item
-                    .getMenuInfo();
-            MILinkData data = page.findInList(menuInfo.position);
             new DownloadFileAsyncTask(this, new DownloadObject(data.getTitle(),
                     data.getUrl()), prefs.getString(
                     PreferencesKeys.diaporamaDlPath,
                     PreferencesKeys.diaporamaDlPathDefault)).execute();
+            return true;
+        case R.id.menuImageShare:
+            new ShareByMail().shareIt(this, data);
             return true;
         }
         return false;
@@ -360,9 +364,9 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
             // float y = event.getY(0) + event.getY(1);
             try {
                 float x = ((Float) _getX.invoke(event, new Integer(0)))
-                        - ((Float) _getX.invoke(event, new Integer(1)));
+                        + ((Float) _getX.invoke(event, new Integer(1)));
                 float y = ((Float) _getY.invoke(event, new Integer(0)))
-                        - ((Float) _getY.invoke(event, new Integer(1)));
+                        + ((Float) _getY.invoke(event, new Integer(1)));
                 point.set(x / 2, y / 2);
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();

@@ -2,6 +2,8 @@ package com.headbangers.mi.activity.preferences;
 
 import android.app.Dialog;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +27,14 @@ public abstract class GenericPreferences extends GuicePreferenceActivity {
     protected abstract String giveMePreferenceNumberKey ();
     protected Integer giveMePreferenceNumberValue (){
         return preferences.getInt(giveMePreferenceNumberKey(), 10);
+    }
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+        preferences = PreferenceManager.getDefaultSharedPreferences(this
+                .getApplicationContext());
     }
     
     @Override

@@ -1,16 +1,15 @@
 package com.headbangers.mi.activity.thread;
 
-import com.headbangers.mi.activity.RadioActivity;
+import com.headbangers.mi.activity.TelevisionActivity;
 import com.headbangers.mi.model.DataPage;
 import com.headbangers.mi.service.DataAccessService;
 import com.headbangers.mi.service.Segment;
 
-public class LoadRadioTracksAsyncTask extends
-        GenericLoadFromWebserviceAsyncTask {
-
-    public LoadRadioTracksAsyncTask(RadioActivity context,
+public class LoadVideosAsyncTask extends GenericLoadFromWebserviceAsyncTask {
+    
+    public LoadVideosAsyncTask(TelevisionActivity context,
             DataAccessService data) {
-        super(Segment.MP3, data);
+        super (Segment.YOUTUBE, data);
         this.context = context;
     }
 
@@ -21,8 +20,9 @@ public class LoadRadioTracksAsyncTask extends
 
     @Override
     protected void onPostExecute(DataPage result) {
-        ((RadioActivity)context).fillList(result);
+        ((TelevisionActivity)context).fillList(result);
         super.onPostExecute(result);
     }
+
 
 }

@@ -21,6 +21,12 @@ public class MainActivity extends GuiceListActivity {
 
     private static final int MENU_RADIO = 0;
     private static final int MENU_DIAPORAMA = 1;
+    private static final int MENU_DISCUSSIONS = 2;
+    private static final int MENU_TELEVISION = 3;
+    private static final int MENU_CESOIR = 4;
+    private static final int MENU_AGENDA = 5;
+    private static final int MENU_RELEASES = 6;
+    private static final int MENU_CONTACTS = 7;
 
     @InjectResource(R.array.main_menu)
     protected String[] menus;
@@ -60,7 +66,18 @@ public class MainActivity extends GuiceListActivity {
             gotoPage = new Intent(this, RadioActivity.class);
             break;
         case MENU_DIAPORAMA:
-            gotoPage = new Intent (this, DiaporamaActivity.class);
+            gotoPage = new Intent(this, DiaporamaActivity.class);
+            break;
+        case MENU_AGENDA:
+            gotoPage = new Intent(this, AgendaActivity.class);
+            break;
+        case MENU_CESOIR:
+        case MENU_CONTACTS:
+        case MENU_DISCUSSIONS:
+        case MENU_RELEASES:
+            break;
+        case MENU_TELEVISION:
+            gotoPage = new Intent (this, TelevisionActivity.class);
             break;
         }
 

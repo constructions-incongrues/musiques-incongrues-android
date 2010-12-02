@@ -1,0 +1,38 @@
+version 0.05-BETA
+-----------------------------
+NOUVEAU:
+- Diaporama entièrement terminé
+  - affichage d'une galerie
+  - un clic sur la galerie afficher l'image en grand
+  - gestion du zoom (avec ou sans multi-touch)
+  - gestion du déplacement de l'image au bout du doigt
+  - compatibilité conservée pour android 1.6 (désactivation du multi-touch)
+  - menus usuels : Préférences, Au hasard, Les suivantes !!
+- Télévision entièrement terminée
+  - affichage de la liste des vidéos
+  - lecture via l'application Youtube/Internet/autre (dépend du tel)
+  - menus usuels : Préférences, Au hasard, Les suivantes !!
+- Ajout de la possibilité de télécharger les images et les tracks
+- Ajout de la possibilité de partager des liens par mail/bluetooth/autre(dépend du tel)
+- Stabilisations diverses (vérification connexion réseau, amélioration lecture mp3, ...)
+- Parallèlisation des connexions web (des petites boites de dialogues font patienter)
+- Possibilité d'annuler une connexion au service (pendant le dialogue "Patientez")
+- Démarrage de l'activité Agenda (affichage succint uniquement)
+
+BUGS CONNUS:
+- le téléchargement des images ne donne pas encore des fichiers lisibles par le tel (tout noir:| )
+- l'affichage de la chanson en cours de lecture n'est pas assez clair
+- des bugs d'affichage (notamment les accents) : coté webservices :(
+
+version 0.04-BETA
+-----------------------------
+
+version 0.03-BETA
+-----------------------------
+
+version 0.02-BETA
+-----------------------------
+
+version 0.01-BETA
+-----------------------------
+INITIALISATION DU PROJET :)

@@ -7,18 +7,18 @@ import android.preference.Preference.OnPreferenceClickListener;
 import com.headbangers.mi.R;
 import com.headbangers.mi.constant.PreferencesKeys;
 
-public class RadioPreferencesActivity extends GenericPreferences {
+public class TelevisionPreferencesActivity extends GenericPreferences {
 
     @Override
     protected String giveMePreferenceNumberKey() {
-        return PreferencesKeys.radioNumber;
+        return PreferencesKeys.televisionNumber;
     }
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.radio_preferences);
+        addPreferencesFromResource(R.xml.television_preferences);
         Preference customPref = (Preference) findPreference(giveMePreferenceNumberKey());
         customPref
                 .setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -30,7 +30,6 @@ public class RadioPreferencesActivity extends GenericPreferences {
                     }
 
                 });
-
     }
 
 }

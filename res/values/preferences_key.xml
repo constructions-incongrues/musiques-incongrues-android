@@ -4,4 +4,5 @@
   <string name="radioPreferences.downloadPath">radioPreferences.dowloadPath</string>
   <string name="diaporamaPreferences.nbImages">diaporamaPreferences.nbImages</string>
   <string name="diaporamaPreferences.downloadPath">diaporamaPreferences.downloadPath</string>
+  <string name="televisionPreferences.nbVideos">televisionPreferences.nbVideos</string>
 </resources>

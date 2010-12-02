@@ -18,6 +18,8 @@ public class ProgressBarThread implements Runnable {
     @Override
     public void run() {
         progressBar.setProgress(0);
+        current = 0;
+        total = 0;
         try {
             while (mediaPlayer.isPlaying()
                     && (current = mediaPlayer.getCurrentPosition()) <= (total = mediaPlayer
@@ -28,6 +30,7 @@ public class ProgressBarThread implements Runnable {
             }
         } catch (IllegalStateException e) {
             // allez ! salut !
+            progressBar.setProgress(0);
         }
 
     }
