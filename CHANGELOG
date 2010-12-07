@@ -1,3 +1,32 @@
+version 0.06-BETA
+-----------------------------
+DISCLAIMER:
+Cette version est la version "finale" de la première phase de ce projet: j'ai 
+exploité toutes les fonctionnalités de data.musiques-incongrues.net (et quelques
+RSS). La version 0.07-BETA sera donc dédiée à la correction des bugs. Merci de
+remonter tout problème (avec le plus de détail possible) à : spintronic@otasc.org
+
+Cette version est la version 1.0 sur le market Android.
+
+NOUVEAU:
+- Agenda entièrement terminé
+    - affichage des entrées (lecture du flux RSS)
+    - un clic sur l'entrée donne les détails (avec des zolis liens)
+    - un clic long permet de partager l'entrée avec ses contacts mails
+- Releases entièrement terminé
+    - affichage des entrées (depuis le flux RSS)
+    - idem que pour agenda (clic = détails + liens , clic long=partage et téléchargement)
+- Ajout de la rubrique Contacts et Liens (des infos sont encore à rajouter dedans)
+- Corrections de bugs (notamment le téléchargement des images)
+- Ajout d'une indication de lecture sur l'interface de la radio (le petit perso de la radio mi)
+
+BUGS CONNUS:
+- impossible d'annuler un téléchargement (même avec le task-killer). Gaffe !
+- les barres de progression du son dans Release et Radio peuvent être parfois "mélangées" 
+    (lancer un son dans radio et il s'affichera aussi dans Releases)
+- des bugs d'affichage (notamment les accents) : coté webservices :(
+
+
 version 0.05-BETA
 -----------------------------
 NOUVEAU:
@@ -36,3 +65,12 @@ version 0.02-BETA
 version 0.01-BETA
 -----------------------------
 INITIALISATION DU PROJET :)
+
+
+HOW-TO INSTALL:
+- Démarrer son téléphone :D
+- Aller dans "Parametres > Applications" et cocher "Sources inconnus" (la coche doit être verte)
+- Ouvrir un navigateur INTERNET (!)
+- Taper cette addresse : http://chiptunes.fr/share/mi-android/releases/musiques-incongrues-last.apk
+- Une fois le fichier téléchargé, cliquer dessus et laisser l'appli s'installer toute seule ^^
+- Démarrer MI-Android !!

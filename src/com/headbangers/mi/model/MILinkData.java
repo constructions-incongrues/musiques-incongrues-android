@@ -19,6 +19,11 @@ public class MILinkData {
 
     private String title;
 
+    public MILinkData (String title, String url){
+        this.url = url;
+        this.title = title;
+    }
+    
     public MILinkData(Map<String, Object> value) {
 
         this.contributorName = (String) value.get("contributor_name");

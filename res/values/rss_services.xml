@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="rssAgendaUrl">http://www.musiques-incongrues.net/forum/s/feeds/events</string>
+<!--  <string name="podcastReleasesUrl">http://10.0.2.2/podcast.xml</string>-->
+    <string name="podcastReleasesUrl">http://www.musiques-incongrues.net/forum/s/feeds/podcast</string>
 </resources>

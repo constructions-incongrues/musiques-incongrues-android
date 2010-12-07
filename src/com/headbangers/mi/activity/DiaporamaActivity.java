@@ -30,6 +30,7 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ImageView.ScaleType;
 import android.widget.Toast;
 
@@ -67,6 +68,8 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
     private ImageButton zoomOut;
     @InjectView(R.id.diaporamaRefresh)
     private ImageButton refresh;
+    @InjectView (R.id.diaporamaImageInfos)
+    private TextView imageInfos;
 
     protected SharedPreferences prefs;
 
@@ -100,6 +103,10 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
                         zoomImage.setScaleType(ScaleType.MATRIX);
                         matrix.set(zoomImage.getImageMatrix());
                         currentSelected = position;
+                        
+                        MILinkData data = page.findInList(position);
+                        imageInfos.setText (data.getContributorName() + " // " + data.getDiscussionTitle());
+                        imageInfos.setVisibility(View.VISIBLE);
                     }
 
                 });

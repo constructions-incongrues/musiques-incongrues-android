@@ -5,14 +5,19 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import android.util.Log;
+
 import com.headbangers.mi.service.RSSAccessService;
 
 public abstract class BaseFeedParser implements RSSAccessService {
-
+    private static String TAG = "RSSFeedParser";
+    
     // names of the XML tags
     public static final String PUB_DATE = "pubDate";
     public static final  String DESCRIPTION = "description";
     public static final  String LINK = "link";
+    public static final String AUTHOR = "author";
+    public static final String ENCLOSURE = "enclosure";
     public static final  String TITLE = "title";
     public static final  String ITEM = "item";
     public static final String CONTENT = "content";
@@ -30,6 +35,7 @@ public abstract class BaseFeedParser implements RSSAccessService {
 
     protected InputStream getInputStream() {
         try {
+            Log.d(TAG, "Appel de l'url : "+this.feedUrl);
             return feedUrl.openConnection().getInputStream();
         } catch (IOException e) {
             throw new RuntimeException(e);

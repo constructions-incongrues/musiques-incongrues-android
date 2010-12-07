@@ -5,4 +5,5 @@
   <string name="diaporamaPreferences.nbImages">diaporamaPreferences.nbImages</string>
   <string name="diaporamaPreferences.downloadPath">diaporamaPreferences.downloadPath</string>
   <string name="televisionPreferences.nbVideos">televisionPreferences.nbVideos</string>
+  <string name="releasesPreferences.downloadPath">releasesPreferences.downloadPath</string>
 </resources>

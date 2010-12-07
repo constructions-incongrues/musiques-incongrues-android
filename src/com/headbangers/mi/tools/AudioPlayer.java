@@ -24,12 +24,12 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener,
 
     public static String TAG = "AudioPlayer";
 
-    public static AudioPlayer getInstance(Activity context, DataPage playlist,
-            ProgressBar bar, TextView text) {
+    public static AudioPlayer getInstance(Activity context, ProgressBar bar,
+            TextView text) {
         if (instance == null) {
-            instance = new AudioPlayer(context, playlist, bar, text);
+            instance = new AudioPlayer(context, bar, text);
         } else {
-            instance.init(context, playlist, bar, text);
+            instance.init(context, bar, text);
         }
         return instance;
     }
@@ -51,20 +51,17 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener,
 
     private ProgressBarThread barThread;
 
-    private AudioPlayer(Activity context, DataPage playlist, ProgressBar bar,
-            TextView text) {
+    private AudioPlayer(Activity context, ProgressBar bar, TextView text) {
         androidMediaPlayer.setOnPreparedListener(this);
         androidMediaPlayer.setOnBufferingUpdateListener(this);
         androidMediaPlayer.setOnCompletionListener(this);
         androidMediaPlayer.setOnSeekCompleteListener(this);
         androidMediaPlayer.setOnErrorListener(this);
 
-        init(context, playlist, bar, text);
+        init(context, bar, text);
     }
 
-    private void init(Activity context, DataPage playlist, ProgressBar bar,
-            TextView text) {
-        this.playlist = playlist;
+    private void init(Activity context, ProgressBar bar, TextView text) {
         this.associatedProgressBar = bar;
         this.associatedTextView = text;
         this.context = context;
@@ -120,10 +117,10 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener,
                         "Il y a un problème avec le morceau"
                                 + playlist.findInList(currentSongNumber)
                                         .getTitle()
-                                + ". Impossible de le lire après 5 essais. Sorry ... Je vais lire le morceau suivant !",
+                                + ". Impossible de le lire après 5 essais. Sorry ...",
                         3000).show();
                 forced = 0;
-                nextSong();
+                // nextSong();
             }
         }
     }

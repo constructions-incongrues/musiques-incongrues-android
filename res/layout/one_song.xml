@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent" android:layout_height="wrap_content"
   android:orientation="horizontal" android:paddingTop="5dip"
-  android:paddingBottom="5dip">
+  android:paddingBottom="5dip" android:id="@+id/oneSongLine">
 
   <ImageView android:id="@+id/songIcon" android:src="@drawable/song"
     android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
 
     <TextView android:id="@+id/songContributor"
       android:layout_width="fill_parent" android:layout_height="wrap_content"
-      android:textColor="#ff00ff" android:textSize="6pt"
+      android:textColor="@color/mi_pink" android:textSize="6pt"
       android:layout_weight="5" android:gravity="center_vertical" />
 
   </LinearLayout>

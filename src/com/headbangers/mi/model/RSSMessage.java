@@ -1,20 +1,29 @@
 package com.headbangers.mi.model;
 
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class RSSMessage implements Comparable<RSSMessage> {
+public class RSSMessage implements Comparable<RSSMessage>, Serializable {
 
-    static SimpleDateFormat FORMATTER = new SimpleDateFormat(
+    private static final long serialVersionUID = 1984L;
+
+    static SimpleDateFormat FORMATER = new SimpleDateFormat(
             "EEE, dd MMM yyyy HH:mm:ss");
+    static SimpleDateFormat SIMPLE_FORMATER = new SimpleDateFormat(
+            "yyyy-MM-dd");
+
     private String title;
     private URL link;
     private String description;
     private String content;
     private Date date;
+
+    private String author;
+    private URL enclosureLink;
 
     public void setLink(String link) {
         try {
@@ -23,11 +32,19 @@ public class RSSMessage implements Comparable<RSSMessage> {
             throw new RuntimeException(e);
         }
     }
-    
+
+    public void setEnclosureLink(String link) {
+        try {
+            this.enclosureLink = new URL(link);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void setContent(String content) {
         this.content = content;
     }
-    
+
     public String getContent() {
         return content;
     }
@@ -37,15 +54,11 @@ public class RSSMessage implements Comparable<RSSMessage> {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = title.replaceAll("#039;", "'");
     }
 
     public URL getLink() {
         return link;
-    }
-
-    public void setLink(URL link) {
-        this.link = link;
     }
 
     public String getDescription() {
@@ -60,8 +73,19 @@ public class RSSMessage implements Comparable<RSSMessage> {
         this.date = date;
     }
 
-    public String getDate() {
-        return FORMATTER.format(this.date);
+    public String getDateAsString() {
+        return FORMATER.format(this.date);
+    }
+
+    public String getSimpleFormatedDate() {
+        if (this.date != null) {
+            return SIMPLE_FORMATER.format(this.date);
+        }
+        return "???";
+    }
+
+    public Date getDate() {
+        return this.date;
     }
 
     public void setDate(String date) {
@@ -69,10 +93,22 @@ public class RSSMessage implements Comparable<RSSMessage> {
         // date += "0";
         // }
         try {
-            this.date = FORMATTER.parse(date.trim());
+            this.date = FORMATER.parse(date.trim());
         } catch (ParseException e) {
             this.date = null;
         }
+    }
+
+    public URL getEnclosureLink() {
+        return enclosureLink;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getAuthor() {
+        return author!=null?author:"L'incongru inconnu";
     }
 
     @Override

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <PreferenceCategory android:title="Préférences Diaporama">
+ 
+     <EditTextPreference android:key="@string/releasesPreferences.downloadPath"
+      android:summary="Répertoire pour l'enregistrement des releases"
+      android:title="Répertoire sauvegarde" android:defaultValue="Musiques-Incongrues/Releases/" />
+
+  </PreferenceCategory>
+</PreferenceScreen>

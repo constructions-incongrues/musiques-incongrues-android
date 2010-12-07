@@ -65,7 +65,10 @@ public class HttpServiceImpl implements HttpService {
 
                 bis.close();
                 fos.close();
+                
+                bos.flush();
                 bos.close();
+                
                 return true;
 
             } catch (IOException e) {

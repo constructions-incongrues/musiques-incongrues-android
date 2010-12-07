@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -75,8 +76,9 @@ public class RadioActivity extends GuiceListActivity {
                 .getApplicationContext());
 
         setListAdapter(new RadioAdapter(RadioActivity.this));
-        audioPlayer = AudioPlayer.getInstance(this, page, progressBar, buffer);
-
+        audioPlayer = AudioPlayer.getInstance(this, progressBar, buffer);
+        audioPlayer.setPlaylist(page);
+        
         loadAsyncList(LoadRadioTracksAsyncTask.SEARCH_TYPE_FIRST, 0);
 
         barStop.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +86,7 @@ public class RadioActivity extends GuiceListActivity {
             @Override
             public void onClick(View v) {
                 audioPlayer.stopPlaylist();
+                tellListToRefresh();
             }
         });
 
@@ -100,6 +103,7 @@ public class RadioActivity extends GuiceListActivity {
             @Override
             public void onClick(View v) {
                 audioPlayer.nextSong();
+                tellListToRefresh();
             }
         });
 
@@ -108,6 +112,7 @@ public class RadioActivity extends GuiceListActivity {
             @Override
             public void onClick(View v) {
                 audioPlayer.previousSong();
+                tellListToRefresh();
             }
         });
 
@@ -116,18 +121,15 @@ public class RadioActivity extends GuiceListActivity {
             @Override
             public void onClick(View v) {
                 audioPlayer.playOrPauseSong();
+                tellListToRefresh();
             }
         });
     }
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        if (audioPlayer.getCurrentSongNumber() >= 0) {
-            ((RadioAdapter) getListAdapter()).undecorate(audioPlayer
-                    .getCurrentSongNumber());
-        }
         audioPlayer.playSong(position);
-        ((RadioAdapter) getListAdapter()).decorate(position);
+        tellListToRefresh();
     }
 
     public class RadioAdapter extends ArrayAdapter<MILinkData> {
@@ -137,19 +139,6 @@ public class RadioActivity extends GuiceListActivity {
         public RadioAdapter(Activity context) {
             super(context, R.layout.one_song, page.getData());
             this.context = context;
-        }
-
-        public void decorate(int position) {
-            // View v = getListView().getChildAt(position);
-            // if (v != null) {
-            // ImageView image = (ImageView) v.findViewById(R.id.songIcon);
-            // image.setImageResource(R.drawable.pin01);
-            // getListView().invalidate();
-            // }
-        }
-
-        public void undecorate(int position) {
-
         }
 
         @Override
@@ -168,6 +157,13 @@ public class RadioActivity extends GuiceListActivity {
                     .findViewById(R.id.songContributor);
             songContributor.setText(data.getContributorName() + " // "
                     + data.getContributionDate());
+            ImageView songIcon = (ImageView) row.findViewById (R.id.songIcon);
+
+            if (audioPlayer.getCurrentSongNumber() == position){
+                songIcon.setImageResource(R.drawable.bonhome);
+            } else {
+                songIcon.setImageResource(R.drawable.song);
+            }
 
             return row;
         }
@@ -231,6 +227,10 @@ public class RadioActivity extends GuiceListActivity {
             return true;
         }
         return false;
+    }
+    
+    private void tellListToRefresh (){
+        ((RadioAdapter)(getListView().getAdapter())).notifyDataSetChanged();
     }
 
     public void fillList(DataPage page) {

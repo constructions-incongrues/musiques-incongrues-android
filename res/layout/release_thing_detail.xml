@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent" android:layout_height="fill_parent"
+  android:background="#ffffff" android:orientation="vertical">
+
+  <LinearLayout android:id="@+id/actionBar"
+    android:orientation="horizontal" android:layout_width="fill_parent"
+    android:layout_height="wrap_content" android:background="@color/mi_pink"
+    android:padding="5dip">
+
+    <TextView android:id="@+id/title" android:layout_width="wrap_content"
+      android:layout_height="wrap_content" android:text="@string/app_title"
+      android:textColor="@color/android:white" android:gravity="center"
+      android:layout_gravity="center_vertical" android:textSize="8pt"
+      android:textStyle="bold" android:textColorHighlight="@color/light_mi_pink" />
+
+    <LinearLayout android:id="@+id/actionBar"
+      android:gravity="right" android:orientation="horizontal"
+      android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+      <TextView android:id="@+id/version" android:layout_width="fill_parent"
+        android:layout_height="wrap_content" android:text="@string/version"
+        android:gravity="right" android:textColor="#ffffff" />
+
+    </LinearLayout>
+  </LinearLayout>
+
+  <TextView android:id="@+id/releaseThingDetailBufferText"
+    android:layout_width="fill_parent" android:layout_height="wrap_content"
+    android:text="@string/thing_details_buffer" android:paddingLeft="5dip"
+    android:background="@color/light_mi_blue" android:textColor="#000000" />
+
+  <TextView android:id="@+id/thingDetailLink"
+    android:layout_width="fill_parent" android:layout_height="wrap_content"
+    android:background="@color/light_mi_blue"
+    android:scrollHorizontally="true" android:textSize="6pt"
+    android:textColor="#333333" android:padding="5dip"
+    android:textColorLink="@color/mi_pink" />
+
+  <TextView android:id="@+id/thingDetailTitle"
+    android:layout_width="fill_parent" android:layout_height="wrap_content"
+    android:textColor="@color/mi_pink" android:textSize="8pt"
+    android:gravity="center" />
+
+  <ScrollView android:layout_height="wrap_content"
+    android:layout_width="fill_parent" android:layout_weight="4">
+    <TextView android:id="@+id/thingDetailDesc"
+      android:layout_width="fill_parent" android:layout_height="wrap_content"
+      android:paddingLeft="5dip" android:textSize="6pt"
+      android:textColorLink="@color/mi_pink" android:textColor="#333333" />
+  </ScrollView>
+
+  <LinearLayout android:layout_height="wrap_content"
+    android:layout_width="fill_parent" android:orientation="vertical"
+    android:gravity="center" android:background="@color/mi_yellow"
+    android:padding="2dip">
+
+    <LinearLayout android:layout_height="wrap_content"
+      android:layout_width="fill_parent" android:orientation="horizontal"
+      android:gravity="center">
+
+      <ImageButton android:id="@+id/releaseStop"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:src="@color/stream_stop" android:paddingLeft="5dip"
+        android:background="@color/android:transparent" />
+
+      <ImageButton android:id="@+id/releasePlay"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:src="@color/stream_play" android:paddingLeft="5dip"
+        android:background="@color/android:transparent" />
+
+    </LinearLayout>
+
+    <ProgressBar android:layout_width="fill_parent"
+      android:layout_height="wrap_content" android:progressDrawable="@drawable/mi_progress_bar"
+      style="?android:attr/progressBarStyleHorizontal" android:id="@+id/releaseStreamBar"
+      android:max="100" android:background="#000000" />
+
+  </LinearLayout>
+
+</LinearLayout>

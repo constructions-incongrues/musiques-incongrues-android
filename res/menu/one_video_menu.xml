@@ -2,6 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
   <item android:enabled="true" android:title="Partager cette vidéo"
-    android:id="@+id/menuVideoShare" android:icon="@drawable/save"></item>
+    android:id="@+id/menuVideoShare" android:icon="@drawable/share"></item>
 
 </menu>

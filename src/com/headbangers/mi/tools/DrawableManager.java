@@ -44,7 +44,7 @@ public class DrawableManager {
             return null;
         }
     }
-
+    
     public void fetchDrawableOnThread(final String urlString,
             final ImageView imageView) {
         if (drawableMap.containsKey(urlString)) {
@@ -57,7 +57,7 @@ public class DrawableManager {
                 if (message.obj != null) {
                     imageView.setImageDrawable((Drawable) message.obj);
                 } else {
-                    imageView.setImageResource(R.drawable.pin03);
+                    imageView.setImageResource(R.drawable.error);
                 }
             }
         };

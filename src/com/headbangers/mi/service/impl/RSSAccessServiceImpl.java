@@ -38,13 +38,29 @@ public class RSSAccessServiceImpl extends BaseFeedParser {
                     String name = property.getNodeName();
 
                     if (name.equalsIgnoreCase(TITLE)) {
+                        NodeList titleChild = property.getChildNodes();
+                        StringBuffer buffer = new StringBuffer();
+                        for (int k = 0; k < titleChild.getLength(); k++) {
+                            String nodeValue = titleChild.item(k)
+                                    .getNodeValue();
+                            buffer.append(nodeValue != null ? nodeValue
+                                    : titleChild.item(k).getNodeName() + ";");
+                        }
+                        message.setTitle(buffer.toString());
 
-                        message.setTitle(property.getFirstChild()
+                    } else if (name.equalsIgnoreCase(AUTHOR)) {
+
+                        message.setAuthor(property.getFirstChild()
                                 .getNodeValue());
 
                     } else if (name.equalsIgnoreCase(LINK)) {
 
                         message.setLink(property.getFirstChild().getNodeValue());
+
+                    } else if (name.equalsIgnoreCase(ENCLOSURE)) {
+
+                        message.setEnclosureLink(property.getAttributes()
+                                .getNamedItem("url").getNodeValue());
 
                     } else if (name.equalsIgnoreCase(DESCRIPTION)) {
 
@@ -75,7 +91,7 @@ public class RSSAccessServiceImpl extends BaseFeedParser {
                 messages.add(message);
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return null;
         }
         return messages;
     }

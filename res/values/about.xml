@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Type de liens: - 1 : lien web - 2 : mail - 3 : numéro de téléphone 
+    - 4 : carte (vers un lieu) -->
+  <string-array name="external_links">
+    <item>Musiques-Incongrues.net_Le paradis des ananas ! Des
+      discussions plus ou moins inspirées, un calendrier d\'évènements,
+      des sorties musicales, une radio automatique et plein d\'autres
+      choses amusantes_http://www.musiques-incongrues.net/forum/_1
+    </item>
+    <item>Chiptunes.fr_Un espace de partage pour musiciens 8bit. Pour
+      chaque artiste, on y trouve des news, des photos, des vidéos et
+      surtout du son chiptune !_http://chiptunes.fr/_1</item>
+    <item>Da!Heard-It Records (DHR)_L\'un des plus fameux label français
+      flirtant
+      avec les musiques Toyz-Pop, Electro Trash, Chiptune,
+      Breakcore,
+      Techno Parodique, Electro Punk, Acid, etc. Label
+      éclectique, il a
+      pour ambition de promouvoir de nouveaux artistes
+      et des nouvelles
+      musiques._http://www.daheardit-records.net/_1
+    </item>
+  </string-array>
+</resources>

@@ -15,4 +15,7 @@ public interface PreferencesKeys {
     
     public static String diaporamaDlPath = "diaporamaPreferences.downloadPath";
     public static String diaporamaDlPathDefault = "Musiques-Incongrues/Image/";
+    
+    public static String releasesDlPath = "releasesPreferences.downloadPath";
+    public static String releasesDlPathDefault = "Musiques-Incongrues/Releases/";
 }

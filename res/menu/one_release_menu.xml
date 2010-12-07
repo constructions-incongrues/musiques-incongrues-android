@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <item android:enabled="true" android:title="Télécharger la release"
+    android:id="@+id/menuReleaseSave" android:icon="@drawable/save"></item>
+
+  <item android:enabled="true" android:title="Partager la release"
+    android:id="@+id/menuReleaseShare" android:icon="@drawable/share"></item>
+
+
+</menu>

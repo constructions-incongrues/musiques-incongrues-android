@@ -8,6 +8,6 @@
   <!-- android:id="@+id/menuSongRingtone" android:icon="@drawable/save"></item> -->
 
   <item android:enabled="true" android:title="Partager ce morceau"
-    android:id="@+id/menuSongShare" android:icon="@drawable/save"></item>
+    android:id="@+id/menuSongShare" android:icon="@drawable/share"></item>
 
 </menu>
