@@ -9,7 +9,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.headbangers.mi.R;
 import com.headbangers.mi.model.DownloadObject;
@@ -58,7 +60,12 @@ public class DownloadFileAsyncTask extends AsyncTask<Void, Void, Void> {
         notification.flags |= Notification.FLAG_NO_CLEAR;
 
         Intent notificationIntent = new Intent(this.context,
+        // CancelDownloadActivity.class);
                 this.context.getClass());
+        Bundle bundle = new Bundle();
+        bundle.putInt("notificationId", notificationId);
+        notificationIntent.putExtras(bundle);
+
         PendingIntent contentIntent = PendingIntent.getActivity(
                 this.context.getBaseContext(), 0, notificationIntent, 0);
         notification.contentIntent = contentIntent;
@@ -77,10 +84,8 @@ public class DownloadFileAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        // contentView.setTextViewText(R.id.objectStatus, "Terminé.");
-        // contentView.setProgressBar(R.id.objectDlBar, 100, 100, false);
-        // notification.flags = Notification.DEFAULT_ALL;
         notificationManager.cancel(notificationId);
+        Toast.makeText(context, "Téléchargement terminé!", 1500).show();
     }
 
 }

@@ -28,13 +28,12 @@ import android.widget.Toast;
 import com.google.inject.Inject;
 import com.headbangers.mi.R;
 import com.headbangers.mi.activity.preferences.ReleasesPreferencesActivity;
-import com.headbangers.mi.activity.thread.DownloadFileAsyncTask;
 import com.headbangers.mi.activity.thread.LoadReleasesAsyncTask;
 import com.headbangers.mi.constant.PreferencesKeys;
-import com.headbangers.mi.model.DownloadObject;
 import com.headbangers.mi.model.MILinkData;
 import com.headbangers.mi.model.RSSMessage;
 import com.headbangers.mi.service.RSSAccessService;
+import com.headbangers.mi.tools.DownloadManager;
 import com.headbangers.mi.tools.ShareByMail;
 
 public class ReleasesActivity extends GuiceListActivity {
@@ -52,6 +51,9 @@ public class ReleasesActivity extends GuiceListActivity {
 
     protected SharedPreferences prefs;
 
+    @Inject
+    private DownloadManager downloadManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +61,8 @@ public class ReleasesActivity extends GuiceListActivity {
         prefs = PreferenceManager.getDefaultSharedPreferences(this
                 .getApplicationContext());
 
-        setListAdapter(new ReleasesAdapter(this));
         registerForContextMenu(getListView());
+        setListAdapter(new ReleasesAdapter(this));
         loadAsyncList();
 
         refresh.setOnClickListener(new View.OnClickListener() {
@@ -98,34 +100,34 @@ public class ReleasesActivity extends GuiceListActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        final AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item
-                .getMenuInfo();
-        RSSMessage selected = things.get(menuInfo.position);
-        MILinkData fakeData = new MILinkData(selected.getTitle(), selected
-                .getEnclosureLink().toString());
-
-        switch (item.getItemId()) {
-        case R.id.menuReleaseSave:
-            new DownloadFileAsyncTask(this, new DownloadObject(
-                    fakeData.getTitle(), fakeData.getUrl()), prefs.getString(
-                    PreferencesKeys.releasesDlPath,
-                    PreferencesKeys.releasesDlPathDefault)).execute();
-            return true;
-
-        case R.id.menuReleaseShare:
-            new ShareByMail().shareIt(this, fakeData);
-            return true;
-        }
+        // WTF ??? jamais appelée ... alors que pour les autres, c'est ok ...
+        // bizarre :(
         return false;
     }
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        final AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item
+                .getMenuInfo();
+        RSSMessage selected = things.get(menuInfo.position);
+        MILinkData fakeData = new MILinkData(selected.getTitle(), selected
+                .getEnclosureLink().toString());
         switch (item.getItemId()) {
         case R.id.menuReleasesPreferences:
             Intent intent = new Intent(getBaseContext(),
                     ReleasesPreferencesActivity.class);
             startActivity(intent);
+            return true;
+        case R.id.menuReleaseSave:
+            downloadManager.startDownload(this, prefs.getString(
+                    PreferencesKeys.releasesDlPath,
+                    PreferencesKeys.releasesDlPathDefault),
+                    fakeData.getTitle(), fakeData.getUrl());
+
+            return true;
+
+        case R.id.menuReleaseShare:
+            new ShareByMail().shareIt(this, fakeData);
             return true;
         }
         return false;

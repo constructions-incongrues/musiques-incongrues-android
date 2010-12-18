@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.headbangers.mi" android:versionCode="6"
-  android:versionName="0.06-BETA">
+  package="com.headbangers.mi" android:versionCode="7"
+  android:versionName="0.07-BETA">
 
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -16,6 +16,9 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+    <activity android:name=".activity.CancelDownloadActivity"
+      android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar">
+    </activity>
 
     <activity android:name=".activity.RadioActivity"
       android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar"
@@ -26,8 +29,7 @@
     </activity>
 
     <activity android:name=".activity.DiaporamaActivity"
-      android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar"
-      android:screenOrientation="portrait">
+      android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar">
     </activity>
     <activity android:name=".activity.preferences.DiaporamaPreferencesActivity"
       android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar">
@@ -52,7 +54,7 @@
     <activity android:name=".activity.preferences.TelevisionPreferencesActivity"
       android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar">
     </activity>
-    
+
     <activity android:name=".activity.ContactsActivity"
       android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar">
     </activity>

@@ -1,6 +1,16 @@
 ### PRIORITAIRE
+- corriger le menu releases onOptionsItemSelected
+- le déplacement de l'image n'est pas très utile (à voir) -> 
+        s'en servir plutôt pour faire défiler d'une image a une autre
+- implémenter le double tap pour faire un reset du zoom
+
+- trouver une solution pour le mode paysage
 
 ### NORMAL
+- faire un firstRun et une détection de version (affichage d'un dialogue sur le menu accueil)
+
+## BUGS:
+
 
 ### REQUETES POUR DATA.MUSIQUES-INCONGRUES.NET
 - gérer un offset pour la selection (pagination coté serveur)
@@ -8,3 +18,4 @@
 - je veux plus d'infos sur les events (date et lieu) (peut-être ajouter un segment ?)
 
 ## IDEES
+- partager via twitter, facebook

@@ -27,14 +27,13 @@ import android.widget.Toast;
 import com.google.inject.Inject;
 import com.headbangers.mi.R;
 import com.headbangers.mi.activity.preferences.RadioPreferencesActivity;
-import com.headbangers.mi.activity.thread.DownloadFileAsyncTask;
 import com.headbangers.mi.activity.thread.LoadRadioTracksAsyncTask;
 import com.headbangers.mi.constant.PreferencesKeys;
 import com.headbangers.mi.model.DataPage;
-import com.headbangers.mi.model.DownloadObject;
 import com.headbangers.mi.model.MILinkData;
 import com.headbangers.mi.service.DataAccessService;
 import com.headbangers.mi.tools.AudioPlayer;
+import com.headbangers.mi.tools.DownloadManager;
 import com.headbangers.mi.tools.ShareByMail;
 
 public class RadioActivity extends GuiceListActivity {
@@ -66,6 +65,9 @@ public class RadioActivity extends GuiceListActivity {
     @InjectView(R.id.streamBar)
     private ProgressBar progressBar;
 
+    @Inject
+    private DownloadManager downloadManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // ANDROID TECHNIQUE
@@ -78,7 +80,7 @@ public class RadioActivity extends GuiceListActivity {
         setListAdapter(new RadioAdapter(RadioActivity.this));
         audioPlayer = AudioPlayer.getInstance(this, progressBar, buffer);
         audioPlayer.setPlaylist(page);
-        
+
         loadAsyncList(LoadRadioTracksAsyncTask.SEARCH_TYPE_FIRST, 0);
 
         barStop.setOnClickListener(new View.OnClickListener() {
@@ -157,9 +159,9 @@ public class RadioActivity extends GuiceListActivity {
                     .findViewById(R.id.songContributor);
             songContributor.setText(data.getContributorName() + " // "
                     + data.getContributionDate());
-            ImageView songIcon = (ImageView) row.findViewById (R.id.songIcon);
+            ImageView songIcon = (ImageView) row.findViewById(R.id.songIcon);
 
-            if (audioPlayer.getCurrentSongNumber() == position){
+            if (audioPlayer.getCurrentSongNumber() == position) {
                 songIcon.setImageResource(R.drawable.bonhome);
             } else {
                 songIcon.setImageResource(R.drawable.song);
@@ -215,22 +217,22 @@ public class RadioActivity extends GuiceListActivity {
 
         switch (item.getItemId()) {
         case R.id.menuSongDownload:
-
-            new DownloadFileAsyncTask(this, new DownloadObject(data.getTitle(),
-                    data.getUrl()), prefs.getString(
+            downloadManager.startDownload(this, prefs.getString(
                     PreferencesKeys.radioDlPath,
-                    PreferencesKeys.radioDlPathDefault)).execute();
+                    PreferencesKeys.radioDlPathDefault), data.getTitle(), data
+                    .getUrl());
+
             return true;
-            
+
         case R.id.menuSongShare:
             new ShareByMail().shareIt(this, data);
             return true;
         }
         return false;
     }
-    
-    private void tellListToRefresh (){
-        ((RadioAdapter)(getListView().getAdapter())).notifyDataSetChanged();
+
+    private void tellListToRefresh() {
+        ((RadioAdapter) (getListView().getAdapter())).notifyDataSetChanged();
     }
 
     public void fillList(DataPage page) {

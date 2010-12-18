@@ -2,7 +2,7 @@
 <resources>
   <string name="app_name">Musiques-Incongrues</string>
   <string name="app_title">MUSIQUES INCONGRUES</string>
-  <string name="version">0.06-BETA</string>
+  <string name="version">0.07-BETA</string>
   <string name="radio_buffer">Sélectionnez un morceau dans la liste !</string>
   <string name="diaporama_buffer">Faites défiler ! Touchez pour zoomer/déplacer.</string>
   <string name="agenda_buffer">Qu\'allez vous faire ce mois-ci ?</string>

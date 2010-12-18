@@ -68,7 +68,7 @@ public class AgendaActivity extends GuiceListActivity {
         inflater.inflate(R.menu.one_agenda_menu, menu);
         menu.setHeaderTitle("Que faire ?");
     }
-
+    
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         final AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item

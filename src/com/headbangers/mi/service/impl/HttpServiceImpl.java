@@ -18,7 +18,7 @@ import com.headbangers.mi.service.HttpService;
 public class HttpServiceImpl implements HttpService {
 
     private String TAG = "HttpServiceImpl";
-
+    
     @Override
     public InputStream downloadFile(String fileUrl) {
 

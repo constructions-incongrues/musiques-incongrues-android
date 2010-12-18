@@ -13,13 +13,13 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.inject.Inject;
 import com.headbangers.mi.R;
-import com.headbangers.mi.activity.thread.DownloadFileAsyncTask;
 import com.headbangers.mi.constant.PreferencesKeys;
 import com.headbangers.mi.model.DataPage;
-import com.headbangers.mi.model.DownloadObject;
 import com.headbangers.mi.model.MILinkData;
 import com.headbangers.mi.tools.AudioPlayer;
+import com.headbangers.mi.tools.DownloadManager;
 import com.headbangers.mi.tools.ShareByMail;
 
 public class ReleaseThingDetailActivity extends ThingDetailActivity {
@@ -36,6 +36,9 @@ public class ReleaseThingDetailActivity extends ThingDetailActivity {
     private ImageButton playPause;
     @InjectView(R.id.releaseStop)
     private ImageButton stop;
+    
+    @Inject
+    private DownloadManager downloadManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,10 +91,9 @@ public class ReleaseThingDetailActivity extends ThingDetailActivity {
 
         switch (item.getItemId()) {
         case R.id.menuReleaseSave:
-            new DownloadFileAsyncTask(this, new DownloadObject(
-                    fakeData.getTitle(), fakeData.getUrl()), prefs.getString(
+            downloadManager.startDownload(this, prefs.getString(
                     PreferencesKeys.releasesDlPath,
-                    PreferencesKeys.releasesDlPathDefault)).execute();
+                    PreferencesKeys.releasesDlPathDefault), fakeData.getTitle(), fakeData.getUrl());
 
             return true;
 

@@ -17,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.util.FloatMath;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,21 +31,20 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.ImageView.ScaleType;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.inject.Inject;
 import com.headbangers.mi.R;
 import com.headbangers.mi.activity.preferences.DiaporamaPreferencesActivity;
-import com.headbangers.mi.activity.thread.DownloadFileAsyncTask;
 import com.headbangers.mi.activity.thread.LoadDiaporamaAsyncTask;
 import com.headbangers.mi.constant.PreferencesKeys;
 import com.headbangers.mi.model.DataPage;
-import com.headbangers.mi.model.DownloadObject;
 import com.headbangers.mi.model.MILinkData;
 import com.headbangers.mi.service.DataAccessService;
 import com.headbangers.mi.service.HttpService;
+import com.headbangers.mi.tools.DownloadManager;
 import com.headbangers.mi.tools.DrawableManager;
 import com.headbangers.mi.tools.ShareByMail;
 
@@ -68,7 +68,7 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
     private ImageButton zoomOut;
     @InjectView(R.id.diaporamaRefresh)
     private ImageButton refresh;
-    @InjectView (R.id.diaporamaImageInfos)
+    @InjectView(R.id.diaporamaImageInfos)
     private TextView imageInfos;
 
     protected SharedPreferences prefs;
@@ -79,8 +79,10 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
     protected HttpService http;
     @Inject
     protected DrawableManager drawableManager;
+    @Inject
+    private DownloadManager downloadManager;
 
-    private DataPage page;
+    private DataPage page = new DataPage();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,13 +101,15 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
                     public void onItemClick(AdapterView parent, View v,
                             int position, long id) {
                         ImageView galleryImage = (ImageView) v;
+                        zoomImage.setScaleType(ScaleType.FIT_CENTER);
                         zoomImage.setImageDrawable(galleryImage.getDrawable());
                         zoomImage.setScaleType(ScaleType.MATRIX);
                         matrix.set(zoomImage.getImageMatrix());
+
                         currentSelected = position;
-                        
                         MILinkData data = page.findInList(position);
-                        imageInfos.setText (data.getContributorName() + " // " + data.getDiscussionTitle());
+                        imageInfos.setText(data.getContributorName() + " // "
+                                + data.getDiscussionTitle());
                         imageInfos.setVisibility(View.VISIBLE);
                     }
 
@@ -147,6 +151,63 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
         });
 
         zoomImage.setOnTouchListener(this);
+
+        detector = new GestureDetector(this,
+                new GestureDetector.OnGestureListener() {
+
+                    @Override
+                    public boolean onSingleTapUp(MotionEvent e) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onShowPress(MotionEvent e) {
+
+                    }
+
+                    @Override
+                    public boolean onScroll(MotionEvent e1, MotionEvent e2,
+                            float distanceX, float distanceY) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onLongPress(MotionEvent e) {
+
+                    }
+
+                    @Override
+                    public boolean onFling(MotionEvent e1, MotionEvent e2,
+                            float velocityX, float velocityY) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onDown(MotionEvent e) {
+                        return false;
+                    }
+                });
+        detector.setOnDoubleTapListener(new GestureDetector.OnDoubleTapListener() {
+
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public boolean onDoubleTapEvent(MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                Toast.makeText(DiaporamaActivity.this, "Reset!", 1500).show();
+                zoomImage.setScaleType(ScaleType.FIT_CENTER);
+                matrix.set(zoomImage.getImageMatrix());
+                return true;
+            }
+        });
+
         registerForContextMenu(diapoGallery);
     }
 
@@ -166,10 +227,11 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
 
         switch (item.getItemId()) {
         case R.id.menuImageDownload:
-            new DownloadFileAsyncTask(this, new DownloadObject(data.getTitle(),
-                    data.getUrl()), prefs.getString(
+            downloadManager.startDownload(this, prefs.getString(
                     PreferencesKeys.diaporamaDlPath,
-                    PreferencesKeys.diaporamaDlPathDefault)).execute();
+                    PreferencesKeys.diaporamaDlPathDefault), data.getTitle(),
+                    data.getUrl());
+
             return true;
         case R.id.menuImageShare:
             new ShareByMail().shareIt(this, data);
@@ -287,6 +349,7 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
     // These matrices will be used to move and zoom image
     private Matrix matrix = new Matrix();
     private Matrix savedMatrix = new Matrix();
+    protected GestureDetector detector;
 
     // We can be in one of these 3 states
     private static final int NONE = 0;
@@ -301,13 +364,17 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        boolean eventHandled = false;
         ImageView image = (ImageView) v;
+
+        detector.onTouchEvent(event);
 
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
         case MotionEvent.ACTION_DOWN:
             savedMatrix.set(matrix);
             start.set(event.getX(), event.getY());
             mode = DRAG;
+            eventHandled = true;
             break;
         case MotionEvent.ACTION_POINTER_DOWN:
             oldDist = spacing(event);
@@ -316,10 +383,12 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
                 midPoint(mid, event);
                 mode = ZOOM;
             }
+            eventHandled = true;
             break;
         case MotionEvent.ACTION_UP:
         case MotionEvent.ACTION_POINTER_UP:
             mode = NONE;
+            eventHandled = true;
             break;
         case MotionEvent.ACTION_MOVE:
             if (mode == DRAG) {
@@ -334,12 +403,13 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
                     matrix.postScale(scale, scale, mid.x, mid.y);
                 }
             }
+            eventHandled = true;
             break;
 
         }
 
         image.setImageMatrix(matrix);
-        return true;
+        return eventHandled;
     }
 
     /** Determine the space between the first two fingers */

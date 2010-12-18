@@ -20,7 +20,7 @@
 
       <TextView android:id="@+id/version" android:layout_width="fill_parent"
         android:layout_height="wrap_content" android:text="@string/version"
-        android:gravity="right" android:textColor="#ffffff" />
+        android:gravity="right|center_vertical" android:textColor="#ffffff" />
 
     </LinearLayout>
   </LinearLayout>
