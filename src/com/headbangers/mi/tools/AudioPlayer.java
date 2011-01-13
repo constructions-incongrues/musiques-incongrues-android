@@ -33,6 +33,10 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener,
         }
         return instance;
     }
+    
+    public static AudioPlayer getInstance(Activity context){
+        return getInstance(context, null, null);
+    }
 
     private static AudioPlayer instance = null;
 

@@ -1,15 +1,18 @@
 package com.headbangers.mi.activity;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import roboguice.activity.GuiceActivity;
 import roboguice.inject.InjectView;
 import android.app.Activity;
+import android.app.WallpaperManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Matrix;
 import android.graphics.PointF;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
 import android.os.Bundle;
@@ -235,6 +238,16 @@ public class DiaporamaActivity extends GuiceActivity implements OnTouchListener 
             return true;
         case R.id.menuImageShare:
             new ShareByMail().shareIt(this, data);
+            return true;
+            
+        case R.id.menuImageWallpaper:
+            Drawable imageDrawable = drawableManager.fetchDrawable(data.getUrl());
+            WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
+            try {
+                wallpaperManager.setBitmap(((BitmapDrawable)imageDrawable).getBitmap());
+            } catch (IOException e) {
+                Toast.makeText(this, "Désolé, l'image ne semble pas compatible...", 2000).show();
+            }
             return true;
         }
         return false;

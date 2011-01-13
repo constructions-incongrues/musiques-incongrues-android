@@ -43,7 +43,7 @@ public class WebService {
     private String callAndGetResponseAsString(HttpRequestBase request) {
         HttpClient httpclient = new DefaultHttpClient();
         request.getParams().setParameter("http.socket.timeout",
-                new Integer(20000));
+                new Integer(50000));
 
         try {
             HttpResponse response = httpclient.execute(request);

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<style name="MIMenuList" parent="@android:style/Widget.ListView">
-<!--		<item name="android:divider">#ff00ff</item>-->
-        <item name="android:divider">#cccccc</item>
-		<item name="android:dividerHeight">1px</item>
-	</style>
-	
+  <style name="MIMenuList" parent="@android:style/Widget.ListView">
+    <!-- <item name="android:divider">#ff00ff</item> -->
+    <item name="android:divider">#cccccc</item>
+    <item name="android:dividerHeight">1px</item>
+  </style>
+
 </resources>

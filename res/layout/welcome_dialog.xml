@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent" android:layout_height="fill_parent"
+  android:orientation="vertical">
+
+  <ImageView android:id="@+id/image" android:layout_width="wrap_content"
+    android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+    android:scaleType="fitCenter" android:src="@drawable/icon" />
+
+  <TextView android:text="@string/welcome_text"
+    android:layout_width="fill_parent" android:layout_height="wrap_content"
+    android:gravity="center" android:textSize="16dip" />
+
+  <TextView android:text="@string/version"
+    android:layout_width="fill_parent" android:layout_height="wrap_content"
+    android:gravity="center" android:textSize="10dip" />
+
+  <TextView android:text="@string/whats_new"
+    android:layout_width="fill_parent" android:layout_height="170dip"
+    android:padding="5dip" />
+
+</LinearLayout>

@@ -8,7 +8,7 @@
 
 	<EditText android:id="@+id/dialogNumberInput"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:inputType="number" android:gravity="center" android:textSize="8pt" />
+		android:inputType="number" android:gravity="center" android:textSize="16dip" />
 
 	<Button android:id="@+id/dialogNumberMoins"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"

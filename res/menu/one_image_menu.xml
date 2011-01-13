@@ -9,5 +9,8 @@
 
    <item android:enabled="true" android:title="Partager cette image" 
    android:id="@+id/menuImageShare" android:icon="@drawable/share"></item> 
+   
+   <item android:enabled="true" android:title="Cette image en fond d'écran" 
+   android:id="@+id/menuImageWallpaper" android:icon="@drawable/paint"></item> 
 
 </menu>

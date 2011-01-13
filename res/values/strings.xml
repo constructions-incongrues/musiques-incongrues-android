@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="whats_new">Quoi de neuf pour cette version ?\n\n- Les images en wallpaper !\n
+  - Mode portrait/paysage
+    </string>
+  <string name="welcome_text">Bienvenue !</string>
   <string name="app_name">Musiques-Incongrues</string>
   <string name="app_title">MUSIQUES INCONGRUES</string>
-  <string name="version">0.07-BETA</string>
+  <string name="version">0.10-BETA</string>
   <string name="radio_buffer">Sélectionnez un morceau dans la liste !</string>
-  <string name="diaporama_buffer">Faites défiler ! Touchez pour zoomer/déplacer.</string>
+  <string name="diaporama_buffer">Faites défiler ! Touchez pour zoomer/déplacer.
+  </string>
   <string name="agenda_buffer">Qu\'allez vous faire ce mois-ci ?</string>
   <string name="thing_details_buffer">Des détails pour être plus précis !</string>
   <string name="television_buffer">Sélectionnez une vidéo dans la liste !</string>
@@ -18,7 +23,8 @@
     <item>Ce soir on sort!_Que se passe t-il ce soir ? (TODO)</item>
     <item>Agenda_Les choses à faire ou ne pas faire</item>
     <item>Releases_Les dernières productions incongrues</item>
-    <item>Membres_Qui parle/chuchotte/hurle sur Musiques-Incongrues ? (TODO)</item>
+    <item>Membres_Qui parle/chuchotte/hurle sur Musiques-Incongrues ?
+      (TODO)</item>
     <item>Contact et liens_Des liens pour aller plus loin ...</item>
   </string-array>
 </resources>

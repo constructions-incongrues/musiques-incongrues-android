@@ -11,7 +11,7 @@
     <TextView android:id="@+id/title" android:layout_width="wrap_content"
       android:layout_height="wrap_content" android:text="@string/app_title"
       android:textColor="@color/android:white" android:gravity="center"
-      android:layout_gravity="center_vertical" android:textSize="8pt"
+      android:layout_gravity="center_vertical" android:textSize="16dip"
       android:textStyle="bold" android:textColorHighlight="@color/light_mi_pink" />
 
     <LinearLayout android:id="@+id/actionBar"
@@ -33,20 +33,20 @@
   <TextView android:id="@+id/thingDetailLink"
     android:layout_width="fill_parent" android:layout_height="wrap_content"
     android:background="@color/light_mi_blue"
-    android:scrollHorizontally="true" android:textSize="6pt"
+    android:scrollHorizontally="true" android:textSize="12dip"
     android:textColor="#333333" android:padding="5dip"
     android:textColorLink="@color/mi_pink" />
 
   <TextView android:id="@+id/thingDetailTitle"
     android:layout_width="fill_parent" android:layout_height="wrap_content"
-    android:textColor="@color/mi_pink" android:textSize="8pt"
+    android:textColor="@color/mi_pink" android:textSize="16dip"
     android:gravity="center" />
 
   <ScrollView android:layout_height="fill_parent"
     android:layout_width="fill_parent">
     <TextView android:id="@+id/thingDetailDesc"
       android:layout_width="fill_parent" android:layout_height="wrap_content"
-      android:paddingLeft="5dip" android:textSize="6pt"
+      android:paddingLeft="5dip" android:textSize="12dip"
       android:textColorLink="@color/mi_pink" android:textColor="#333333" />
   </ScrollView>
 

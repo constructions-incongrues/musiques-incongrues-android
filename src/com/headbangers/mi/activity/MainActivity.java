@@ -3,9 +3,12 @@ package com.headbangers.mi.activity;
 import roboguice.activity.GuiceListActivity;
 import roboguice.inject.InjectResource;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +34,13 @@ public class MainActivity extends GuiceListActivity {
 
     @InjectResource(R.array.main_menu)
     protected String[] menus;
+    @InjectResource(R.string.version)
+    protected String version;
+    @InjectResource(R.string.app_title)
+    protected String appTitle;
 
+    protected SharedPreferences prefs;
+    
     protected static int[] icons = { R.drawable.grapp01, R.drawable.pin01,
             R.drawable.grapp02, R.drawable.pin02, R.drawable.grapp03,
             R.drawable.pin03, R.drawable.grapp04, R.drawable.pin04,
@@ -44,6 +53,26 @@ public class MainActivity extends GuiceListActivity {
         setContentView(R.layout.main);
 
         setListAdapter(new MainMenuAdapter(this));
+        
+        prefs = PreferenceManager.getDefaultSharedPreferences(this
+                .getApplicationContext());
+        boolean firstRun = prefs.getBoolean("mi-"+version, true);
+        if (firstRun){
+            prefs.edit().putBoolean("mi-"+version, false).commit();
+            // affichage du dialogue de bienvenue
+            showWelcomeDialog ();
+        }
+    }
+
+    private void showWelcomeDialog() {
+        Dialog dialog = new Dialog(this, 0);
+        
+        dialog.setContentView(R.layout.welcome_dialog);
+        dialog.setTitle(appTitle);       
+
+        dialog.setCanceledOnTouchOutside(true);
+
+        dialog.show();
     }
 
     @Override

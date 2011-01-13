@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent" android:layout_height="fill_parent"
+  android:orientation="vertical" android:background="@drawable/widget_radio"
+  android:paddingRight="15dip" android:paddingLeft="16dip"
+  android:paddingTop="12dip" android:paddingBottom="13dip">
+
+  <LinearLayout android:layout_height="fill_parent"
+    android:layout_width="fill_parent" android:orientation="vertical"
+    android:gravity="center">
+
+    <TextView android:id="@+id/text" android:layout_width="fill_parent"
+      android:layout_height="wrap_content" android:textColor="#000000"
+      android:text="@string/app_title" android:gravity="center" />
+
+    <LinearLayout android:id="@+id/actionBar"
+      android:layout_height="wrap_content" android:orientation="horizontal"
+      android:layout_width="fill_parent" android:gravity="center">
+
+      <ImageButton android:id="@+id/stop"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:src="@color/stream_stop" android:paddingLeft="5dip"
+        android:background="@color/android:transparent" />
+
+      <ImageButton android:id="@+id/play"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:src="@color/stream_play" android:paddingLeft="5dip"
+        android:background="@color/android:transparent" />
+
+      <ImageButton android:id="@+id/next"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:src="@color/stream_next" android:paddingLeft="5dip"
+        android:background="@color/android:transparent" />
+
+    </LinearLayout>
+    <!-- <ProgressBar android:layout_width="200dip" -->
+    <!-- android:layout_height="2dip" android:progressDrawable="@drawable/mi_progress_bar" -->
+    <!-- style="?android:attr/progressBarStyleHorizontal" android:id="@+id/streamBar" -->
+    <!-- android:max="100" android:background="#000000" /> -->
+
+  </LinearLayout>
+
+</LinearLayout>

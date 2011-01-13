@@ -1,3 +1,20 @@
+version 0.09-BETA
+-----------------------------
+- Correction de bugs divers
+- Ajout du widget "Oeil"
+- Création de la boite de dialogue "firstRun" 
+- Amélioration du code
+- Changement du sizing des polices pour être compatible avec tous les écrans
+    
+version 0.08-BETA
+-----------------------------
+- correction du bug de téléchargement
+
+version 0.07-BETA
+-----------------------------
+- amélioration du diaporama (ajout du double tap, réinitialisation de l'image 
+au chargement d'une nouvelle, ...)
+
 version 0.06-BETA
 -----------------------------
 DISCLAIMER:
@@ -32,7 +49,7 @@ version 0.05-BETA
 NOUVEAU:
 - Diaporama entièrement terminé
   - affichage d'une galerie
-  - un clic sur la galerie afficher l'image en grand
+  - un clic sur la galerie affiche l'image en grand
   - gestion du zoom (avec ou sans multi-touch)
   - gestion du déplacement de l'image au bout du doigt
   - compatibilité conservée pour android 1.6 (désactivation du multi-touch)

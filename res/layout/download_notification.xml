@@ -14,13 +14,13 @@
 
     <TextView android:id="@+id/objectName"
       android:layout_width="fill_parent" android:layout_height="wrap_content"
-      android:textColor="@color/mi_pink" android:textSize="6pt"
+      android:textColor="@color/mi_pink" android:textSize="12dip"
       android:layout_weight="5" android:gravity="center_vertical"
       android:scrollHorizontally="true" />
 
     <TextView android:id="@+id/objectStatus"
       android:layout_width="fill_parent" android:layout_height="wrap_content"
-      android:textColor="@color/light_mi_pink" android:textSize="6pt"
+      android:textColor="@color/light_mi_pink" android:textSize="12dip"
       android:layout_weight="5" android:gravity="center_vertical" />
 
     <ProgressBar android:layout_width="fill_parent"

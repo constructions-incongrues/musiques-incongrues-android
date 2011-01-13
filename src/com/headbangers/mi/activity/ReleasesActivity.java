@@ -100,24 +100,12 @@ public class ReleasesActivity extends GuiceListActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        // WTF ??? jamais appelée ... alors que pour les autres, c'est ok ...
-        // bizarre :(
-        return false;
-    }
-
-    @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
         final AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item
                 .getMenuInfo();
         RSSMessage selected = things.get(menuInfo.position);
         MILinkData fakeData = new MILinkData(selected.getTitle(), selected
                 .getEnclosureLink().toString());
         switch (item.getItemId()) {
-        case R.id.menuReleasesPreferences:
-            Intent intent = new Intent(getBaseContext(),
-                    ReleasesPreferencesActivity.class);
-            startActivity(intent);
-            return true;
         case R.id.menuReleaseSave:
             downloadManager.startDownload(this, prefs.getString(
                     PreferencesKeys.releasesDlPath,
@@ -128,6 +116,18 @@ public class ReleasesActivity extends GuiceListActivity {
 
         case R.id.menuReleaseShare:
             new ShareByMail().shareIt(this, fakeData);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.menuReleasesPreferences:
+            Intent intent = new Intent(getBaseContext(),
+                    ReleasesPreferencesActivity.class);
+            startActivity(intent);
             return true;
         }
         return false;

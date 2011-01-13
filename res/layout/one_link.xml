@@ -13,16 +13,16 @@
 
     <TextView android:id="@+id/menuLabel" android:layout_width="fill_parent"
       android:layout_height="wrap_content" android:textColor="#333333"
-      android:textSize="10pt" />
+      android:textSize="20dip" />
 
     <TextView android:id="@+id/menuDisclaimer"
       android:layout_width="fill_parent" android:layout_height="wrap_content"
       android:textColor="#333333" android:background="@color/light_mi_blue"
-      android:textSize="6pt" android:gravity="fill_horizontal" />
+      android:textSize="12dip" android:gravity="fill_horizontal" />
 
     <TextView android:id="@+id/menuLink" android:layout_width="fill_parent"
       android:layout_height="wrap_content" android:textColor="@color/mi_pink"
-      android:textSize="8pt" />
+      android:textSize="16dip" />
 
   </LinearLayout>
 

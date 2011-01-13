@@ -62,13 +62,11 @@ public class HttpServiceImpl implements HttpService {
                 while ((current = bis.read()) != -1) {
                     bos.write(current);
                 }
+                bos.flush();
+                bos.close();
 
                 bis.close();
                 fos.close();
-                
-                bos.flush();
-                bos.close();
-                
                 return true;
 
             } catch (IOException e) {

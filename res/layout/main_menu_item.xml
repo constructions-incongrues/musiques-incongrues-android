@@ -13,7 +13,7 @@
 
     <TextView android:id="@+id/menuLabel" android:layout_width="fill_parent"
       android:layout_height="wrap_content" android:textColor="#333333"
-      android:textSize="10pt" />
+      android:textSize="20dip" />
 
     <TextView android:id="@+id/menuDisclaimer"
       android:layout_width="fill_parent" android:layout_height="wrap_content"
